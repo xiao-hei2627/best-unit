@@ -1,0 +1,24 @@
+{
+  "name": "best-unit",
+  "private": false,
+  "version": "0.0.8",
+  "type": "module",
+  "main": "dist/best-unit.cjs",
+  "module": "dist/best-unit.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && cp -r src/types dist/types",
+    "prepublishOnly": "npm version patch --no-git-tag-version",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "preact": "^10.26.9",
+    "preact-custom-element": "^4.3.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.2",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
+  }
+}
