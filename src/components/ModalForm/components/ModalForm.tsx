@@ -8,6 +8,7 @@ interface ModalFormProps {
 }
 
 export function ModalForm({ visible, onClose, onSubmit, color }: ModalFormProps) {
+    console.log(1111)
   const [formState, setFormState] = useState({
     amount: '',
     rechargeChannel: 'paypal',
