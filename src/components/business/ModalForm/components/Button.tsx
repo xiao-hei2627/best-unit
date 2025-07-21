@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { getBalance } from "../../../api";
+import { getBalance } from "../../../../api";
 
 interface ButtonProps {
   onClick?: () => void;
