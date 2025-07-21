@@ -134,7 +134,7 @@ export function ModalForm({
           padding: 32,
           borderRadius: 12,
           minWidth: 400,
-          color: "#222", // 深色字体
+          color: color || "#222", // 深色字体
           boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
           position: "relative",
         }}
