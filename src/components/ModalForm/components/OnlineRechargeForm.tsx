@@ -135,37 +135,37 @@ export const OnlineRechargeForm: FunctionalComponent<
           fontWeight: 600,
         },
       };
-  const selectCurrencyStyle = whiteTheme
-    ? {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        border: "1px solid #E5E6EB",
-        background: "#fff",
-        color: "#222",
-        fontSize: 15,
-        outline: "none",
-      }
-    : {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        border: "1px solid #23262F",
-        background: "#23262F",
-        color: "#fff",
-        fontSize: 15,
-        outline: "none",
-      };
-  const labelStyle = whiteTheme
-    ? {
-        marginBottom: 8,
-        fontSize: 14,
-        color: "#222",
-        textAlign: "left",
-        display: "block",
-      }
-    : { marginBottom: 8, fontSize: 14, textAlign: "left", display: "block" };
-  const errorStyle = { color: "#ff4d4f", fontSize: 13, marginTop: 4 };
+  //   const selectCurrencyStyle = whiteTheme
+  //     ? {
+  //         width: "100%",
+  //         padding: "10px 12px",
+  //         borderRadius: 6,
+  //         border: "1px solid #E5E6EB",
+  //         background: "#fff",
+  //         color: "#222",
+  //         fontSize: 15,
+  //         outline: "none",
+  //       }
+  //     : {
+  //         width: "100%",
+  //         padding: "10px 12px",
+  //         borderRadius: 6,
+  //         border: "1px solid #23262F",
+  //         background: "#23262F",
+  //         color: "#fff",
+  //         fontSize: 15,
+  //         outline: "none",
+  //       };
+  //   const labelStyle = whiteTheme
+  //     ? {
+  //         marginBottom: 8,
+  //         fontSize: 14,
+  //         color: "#222",
+  //         textAlign: "left",
+  //         display: "block",
+  //       }
+  //     : { marginBottom: 8, fontSize: 14, textAlign: "left", display: "block" };
+  //   const errorStyle = { color: "#ff4d4f", fontSize: 13, marginTop: 4 };
   const buttonCancelStyle = whiteTheme
     ? {
         background: "#fff",
