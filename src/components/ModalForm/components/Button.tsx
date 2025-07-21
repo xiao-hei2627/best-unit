@@ -1,12 +1,29 @@
 import type { ComponentChildren } from "preact";
+import { getBalance } from "../../../api";
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   color?: string;
   children: ComponentChildren;
+  merchantId?: string;
+  bizType?: string;
+  token?: string;
 }
 
-export function ThemedButton({ onClick, color, children }: ButtonProps) {
+export function ThemedButton({
+  onClick,
+  color,
+  children,
+  merchantId,
+  bizType,
+  token,
+}: ButtonProps) {
+  // 组件加载时直接调用
+  if (merchantId && bizType) {
+    getBalance({ merchant_id: merchantId, biz_type: bizType, token }).then(
+      (res) => console.log(res)
+    );
+  }
   return (
     <button
       style={{

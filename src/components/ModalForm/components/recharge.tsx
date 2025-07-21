@@ -11,6 +11,9 @@ interface ModalFormProps {
     currency: string;
   }) => Promise<void>;
   color?: string;
+  merchantId?: string;
+  bizType?: string;
+  token?: string;
 }
 
 export function ModalForm({
@@ -20,7 +23,6 @@ export function ModalForm({
   color,
   whiteTheme = true,
 }: ModalFormProps & { whiteTheme?: boolean }) {
-  console.log(1111);
   const [formState, setFormState] = useState({
     amount: "",
     rechargeChannel: "paypal",

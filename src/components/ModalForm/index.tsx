@@ -7,6 +7,9 @@ export function BestUnit(props: any) {
   const [visible, setVisible] = useState(false);
   const [whiteTheme, setWhiteTheme] = useState(true);
   const color = props.theme?.primaryColor;
+  const merchantId = props.merchant_id;
+  const bizType = props.biz_type;
+  const token = props.token;
 
   const handleSubmit = async (form: {
     amount: string;
@@ -18,7 +21,13 @@ export function BestUnit(props: any) {
 
   return (
     <div>
-      <ThemedButton color={color} onClick={() => setVisible(true)}>
+      <ThemedButton
+        color={color}
+        onClick={() => setVisible(true)}
+        merchantId={merchantId}
+        bizType={bizType}
+        token={token}
+      >
         打开表单
       </ThemedButton>
       <button
@@ -39,6 +48,9 @@ export function BestUnit(props: any) {
         onSubmit={handleSubmit}
         color={color}
         whiteTheme={whiteTheme}
+        merchantId={merchantId}
+        bizType={bizType}
+        token={token}
       />
     </div>
   );

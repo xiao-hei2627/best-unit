@@ -1,7 +1,7 @@
 {
   "name": "best-unit",
   "private": false,
-  "version": "0.0.11",
+  "version": "0.0.13",
   "type": "module",
   "main": "dist/best-unit.cjs",
   "module": "dist/best-unit.js",
@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.10.0",
     "preact": "^10.26.9",
     "preact-custom-element": "^4.3.0"
   },
