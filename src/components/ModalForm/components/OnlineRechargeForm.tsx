@@ -57,7 +57,12 @@ export const OnlineRechargeForm: FunctionalComponent<
         selectError: {
           border: "1px solid #ff4d4f",
         },
-        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        error: {
+          color: "#ff4d4f",
+          fontSize: 13,
+          marginTop: 4,
+          textAlign: "left",
+        },
         buttonCancel: {
           background: "#fff",
           color: "#222",
@@ -114,7 +119,12 @@ export const OnlineRechargeForm: FunctionalComponent<
         selectError: {
           border: "1px solid #ff4d4f",
         },
-        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        error: {
+          color: "#ff4d4f",
+          fontSize: 13,
+          marginTop: 4,
+          textAlign: "left",
+        },
         buttonCancel: {
           background: "#23262F",
           color: "#fff",

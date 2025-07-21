@@ -118,7 +118,12 @@ export const OfflineTransferForm: FunctionalComponent<
           marginLeft: 16,
           cursor: "pointer",
         },
-        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        error: {
+          color: "#ff4d4f",
+          fontSize: 13,
+          marginTop: 4,
+          textAlign: "left",
+        },
       }
     : {
         label: {
@@ -214,7 +219,12 @@ export const OfflineTransferForm: FunctionalComponent<
           marginLeft: 16,
           cursor: "pointer",
         },
-        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        error: {
+          color: "#ff4d4f",
+          fontSize: 13,
+          marginTop: 4,
+          textAlign: "left",
+        },
       };
 
   const handleFileChange = (e: any) => {
