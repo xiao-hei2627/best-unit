@@ -18,7 +18,8 @@ export function ModalForm({
   onClose,
   onSubmit,
   color,
-}: ModalFormProps) {
+  whiteTheme = true,
+}: ModalFormProps & { whiteTheme?: boolean }) {
   console.log(1111);
   const [formState, setFormState] = useState({
     amount: "",
@@ -111,6 +112,88 @@ export function ModalForm({
     }
   };
 
+  const theme = whiteTheme
+    ? {
+        modalBg: "#fff",
+        modalColor: "#222",
+        modalBoxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+        mask: "rgba(0,0,0,0.3)",
+        title: {
+          fontWeight: 600,
+          fontSize: 20,
+          marginBottom: 24,
+          textAlign: "left",
+          color: "#222",
+        },
+        closeBtn: {
+          position: "absolute",
+          right: 16,
+          top: 16,
+          background: "none",
+          border: "none",
+          color: "#222",
+          fontSize: 22,
+          cursor: "pointer",
+          lineHeight: 1,
+        },
+        tabBtn: (active: boolean, left: boolean) => ({
+          flex: 1,
+          background: active ? "#fff" : "#F7F8FA",
+          color: active ? "#155EEF" : "#222",
+          border: "none",
+          borderRadius: left ? "8px 0 0 8px" : "0 8px 8px 0",
+          fontWeight: active ? 600 : 400,
+          fontSize: 16,
+          height: 48,
+          boxShadow: active ? "0 2px 8px 0 rgba(20,20,20,0.04)" : "none",
+          outline: "none",
+          cursor: "pointer",
+          borderRight: left ? "1px solid #F0F1F3" : undefined,
+          borderLeft: !left ? "1px solid #F0F1F3" : undefined,
+          transition: "all 0.2s",
+        }),
+      }
+    : {
+        modalBg: "#181A20",
+        modalColor: "#fff",
+        modalBoxShadow: "0 4px 24px rgba(0,0,0,0.5)",
+        mask: "rgba(0,0,0,0.7)",
+        title: {
+          fontWeight: 600,
+          fontSize: 20,
+          marginBottom: 24,
+          textAlign: "left",
+          color: "#fff",
+        },
+        closeBtn: {
+          position: "absolute",
+          right: 16,
+          top: 16,
+          background: "none",
+          border: "none",
+          color: "#fff",
+          fontSize: 22,
+          cursor: "pointer",
+          lineHeight: 1,
+        },
+        tabBtn: (active: boolean, left: boolean) => ({
+          flex: 1,
+          background: active ? "#23262F" : "#181A20",
+          color: active ? "#00E8C6" : "#fff",
+          border: "none",
+          borderRadius: left ? "8px 0 0 8px" : "0 8px 8px 0",
+          fontWeight: active ? 600 : 400,
+          fontSize: 16,
+          height: 48,
+          boxShadow: active ? "0 2px 8px 0 rgba(20,20,20,0.10)" : "none",
+          outline: "none",
+          cursor: "pointer",
+          borderRight: left ? "1px solid #23262F" : undefined,
+          borderLeft: !left ? "1px solid #23262F" : undefined,
+          transition: "all 0.2s",
+        }),
+      };
+
   return (
     <div
       style={{
@@ -119,7 +202,7 @@ export function ModalForm({
         left: 0,
         right: 0,
         bottom: 0,
-        background: "rgba(0,0,0,0.3)", // 更浅的遮罩
+        background: theme.mask,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -130,12 +213,12 @@ export function ModalForm({
       <form
         onSubmit={handleSubmit}
         style={{
-          background: "#fff", // 白色弹窗
+          background: theme.modalBg,
           padding: 32,
           borderRadius: 12,
           minWidth: 400,
-          color: color || "#222", // 深色字体
-          boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+          color: color || theme.modalColor,
+          boxShadow: theme.modalBoxShadow,
           position: "relative",
         }}
         onClick={(e) => e.stopPropagation()}
@@ -144,79 +227,25 @@ export function ModalForm({
         <button
           type="button"
           onClick={onClose}
-          style={{
-            position: "absolute",
-            right: 16,
-            top: 16,
-            background: "none",
-            border: "none",
-            color: "#222",
-            fontSize: 22,
-            cursor: "pointer",
-            lineHeight: 1,
-          }}
+          style={theme.closeBtn}
           aria-label="关闭"
         >
           ×
         </button>
-        <div
-          style={{
-            fontWeight: 600,
-            fontSize: 20,
-            marginBottom: 24,
-            textAlign: "left",
-            color: "#222",
-          }}
-        >
-          充值 / 转账
-        </div>
+        <div style={theme.title}>充值 / 转账</div>
         {/* tab 按钮区域 */}
         <div style={{ display: "flex", marginBottom: 28 }}>
           <button
             type="button"
             onClick={() => setActiveTab("online")}
-            style={{
-              flex: 1,
-              background: activeTab === "online" ? "#fff" : "#F7F8FA",
-              color: activeTab === "online" ? "#155EEF" : "#222",
-              border: "none",
-              borderRadius: "8px 0 0 8px",
-              fontWeight: activeTab === "online" ? 600 : 400,
-              fontSize: 16,
-              height: 48,
-              boxShadow:
-                activeTab === "online"
-                  ? "0 2px 8px 0 rgba(20,20,20,0.04)"
-                  : "none",
-              outline: "none",
-              cursor: "pointer",
-              borderRight: "1px solid #F0F1F3",
-              transition: "all 0.2s",
-            }}
+            style={theme.tabBtn(activeTab === "online", true)}
           >
             在线充值
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("offline")}
-            style={{
-              flex: 1,
-              background: activeTab === "offline" ? "#fff" : "#F7F8FA",
-              color: activeTab === "offline" ? "#155EEF" : "#222",
-              border: "none",
-              borderRadius: "0 8px 8px 0",
-              fontWeight: activeTab === "offline" ? 600 : 400,
-              fontSize: 16,
-              height: 48,
-              boxShadow:
-                activeTab === "offline"
-                  ? "0 2px 8px 0 rgba(20,20,20,0.04)"
-                  : "none",
-              outline: "none",
-              cursor: "pointer",
-              borderLeft: "1px solid #F0F1F3",
-              transition: "all 0.2s",
-            }}
+            style={theme.tabBtn(activeTab === "offline", false)}
           >
             线下转账
           </button>
@@ -228,7 +257,7 @@ export function ModalForm({
             setFormState={setFormState}
             onClose={onClose}
             loading={formState.loading}
-            whiteTheme={true}
+            whiteTheme={whiteTheme}
           />
         ) : (
           <OfflineTransferForm
@@ -236,6 +265,7 @@ export function ModalForm({
             setFormState={setOfflineFormState}
             onClose={onClose}
             loading={offlineFormState.loading}
+            whiteTheme={whiteTheme}
           />
         )}
       </form>

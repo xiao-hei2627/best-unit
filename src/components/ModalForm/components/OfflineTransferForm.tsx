@@ -14,12 +14,208 @@ interface OfflineTransferFormProps {
   setFormState: (fn: (state: any) => any) => void;
   onClose: () => void;
   loading: boolean;
+  whiteTheme?: boolean;
 }
 
 export const OfflineTransferForm: FunctionalComponent<
   OfflineTransferFormProps
-> = ({ formState, setFormState, onClose, loading }) => {
+> = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 样式对象
+  const theme = whiteTheme
+    ? {
+        label: {
+          marginBottom: 8,
+          fontSize: 14,
+          color: "#222",
+          textAlign: "left",
+          display: "block",
+        },
+        input: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          boxSizing: "border-box",
+          border: "1px solid #E5E6EB",
+          background: "#fff",
+          color: "#222",
+          fontSize: 15,
+          outline: "none",
+          marginBottom: 0,
+        },
+        inputError: {
+          border: "1px solid #ff4d4f",
+        },
+        select: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          border: "1px solid #E5E6EB",
+          background: "#fff",
+          color: "#222",
+          fontSize: 15,
+          outline: "none",
+        },
+        selectError: {
+          border: "1px solid #ff4d4f",
+        },
+        upload: {
+          border: "1px dashed #E5E6EB",
+          borderRadius: 8,
+          background: "#FCFCFD",
+          padding: 24,
+          textAlign: "center",
+          cursor: "pointer",
+          minHeight: 120,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999",
+          fontSize: 15,
+        },
+        uploadError: {
+          border: "1px dashed #ff4d4f",
+        },
+        fileItem: {
+          display: "flex",
+          alignItems: "center",
+          background: "#F7F8FA",
+          borderRadius: 8,
+          padding: "12px 16px",
+          marginBottom: 8,
+          fontSize: 15,
+          color: "#222",
+          justifyContent: "space-between",
+        },
+        buttonCancel: {
+          background: "#fff",
+          color: "#222",
+          border: "1px solid #E5E6EB",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+        },
+        buttonSubmit: {
+          background: "#155EEF",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+          fontWeight: 600,
+        },
+        removeBtn: {
+          background: "#FF4D4F",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "4px 14px",
+          fontSize: 15,
+          marginLeft: 16,
+          cursor: "pointer",
+        },
+        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+      }
+    : {
+        label: {
+          marginBottom: 8,
+          fontSize: 14,
+          color: "#fff",
+          textAlign: "left",
+          display: "block",
+        },
+        input: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          boxSizing: "border-box",
+          border: "1px solid #23262F",
+          background: "#23262F",
+          color: "#fff",
+          fontSize: 15,
+          outline: "none",
+          marginBottom: 0,
+        },
+        inputError: {
+          border: "1px solid #ff4d4f",
+        },
+        select: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          border: "1px solid #23262F",
+          background: "#23262F",
+          color: "#fff",
+          fontSize: 15,
+          outline: "none",
+        },
+        selectError: {
+          border: "1px solid #ff4d4f",
+        },
+        upload: {
+          border: "1px dashed #23262F",
+          borderRadius: 8,
+          background: "#181A20",
+          padding: 24,
+          textAlign: "center",
+          cursor: "pointer",
+          minHeight: 120,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999",
+          fontSize: 15,
+        },
+        uploadError: {
+          border: "1px dashed #ff4d4f",
+        },
+        fileItem: {
+          display: "flex",
+          alignItems: "center",
+          background: "#23262F",
+          borderRadius: 8,
+          padding: "12px 16px",
+          marginBottom: 8,
+          fontSize: 15,
+          color: "#fff",
+          justifyContent: "space-between",
+        },
+        buttonCancel: {
+          background: "#23262F",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+        },
+        buttonSubmit: {
+          background: "#00E8C6",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+          fontWeight: 600,
+        },
+        removeBtn: {
+          background: "#FF4D4F",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "4px 14px",
+          fontSize: 15,
+          marginLeft: 16,
+          cursor: "pointer",
+        },
+        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+      };
 
   const handleFileChange = (e: any) => {
     const files = Array.from(e.target.files).slice(0, 10);
@@ -88,21 +284,13 @@ export const OfflineTransferForm: FunctionalComponent<
   return (
     <form onSubmit={handleSubmit}>
       <div style={{ marginBottom: 18 }}>
-        <div style={{ marginBottom: 8, fontSize: 14, color: "#222" }}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 第三方支付平台
         </div>
         <select
           style={{
-            width: "100%",
-            padding: "10px 12px",
-            borderRadius: 6,
-            border: formState.platformError
-              ? "1px solid #ff4d4f"
-              : "1px solid #E5E6EB",
-            background: "#fff",
-            color: "#222",
-            fontSize: 15,
-            outline: "none",
+            ...theme.select,
+            ...(formState.platformError ? theme.selectError : {}),
           }}
           value={formState.platform}
           onInput={(e) => {
@@ -119,13 +307,11 @@ export const OfflineTransferForm: FunctionalComponent<
           <option value="wechat">微信</option>
         </select>
         {formState.platformError && (
-          <div style={{ color: "#ff4d4f", fontSize: 13, marginTop: 4 }}>
-            {formState.platformError}
-          </div>
+          <div style={theme.error}>{formState.platformError}</div>
         )}
       </div>
       <div style={{ marginBottom: 18 }}>
-        <div style={{ marginBottom: 8, fontSize: 14, color: "#222" }}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 交易ID
         </div>
         <input
@@ -141,47 +327,22 @@ export const OfflineTransferForm: FunctionalComponent<
             }));
           }}
           style={{
-            width: "100%",
-            padding: "10px 12px",
-            borderRadius: 6,
-            boxSizing: "border-box",
-            border: formState.transactionIdError
-              ? "1px solid #ff4d4f"
-              : "1px solid #E5E6EB",
-            background: "#fff",
-            color: "#222",
-            fontSize: 15,
-            outline: "none",
-            marginBottom: 0,
+            ...theme.input,
+            ...(formState.transactionIdError ? theme.inputError : {}),
           }}
         />
         {formState.transactionIdError && (
-          <div style={{ color: "#ff4d4f", fontSize: 13, marginTop: 4 }}>
-            {formState.transactionIdError}
-          </div>
+          <div style={theme.error}>{formState.transactionIdError}</div>
         )}
       </div>
       <div style={{ marginBottom: 24 }}>
-        <div style={{ marginBottom: 8, fontSize: 14, color: "#222" }}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 上传文件
         </div>
         <div
           style={{
-            border: formState.filesError
-              ? "1px dashed #ff4d4f"
-              : "1px dashed #E5E6EB",
-            borderRadius: 8,
-            background: "#FCFCFD",
-            padding: 24,
-            textAlign: "center",
-            cursor: "pointer",
-            minHeight: 120,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#999",
-            fontSize: 15,
+            ...theme.upload,
+            ...(formState.filesError ? theme.uploadError : {}),
           }}
           onClick={() => fileInputRef.current?.click()}
           onDrop={handleDrop}
@@ -212,20 +373,7 @@ export const OfflineTransferForm: FunctionalComponent<
         {formState.files && formState.files.length > 0 && (
           <div style={{ marginTop: 12 }}>
             {formState.files.map((file, idx) => (
-              <div
-                key={idx}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  background: "#F7F8FA",
-                  borderRadius: 8,
-                  padding: "12px 16px",
-                  marginBottom: 8,
-                  fontSize: 15,
-                  color: "#222",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div key={idx} style={theme.fileItem}>
                 <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
                   <span style={{ fontWeight: 500 }}>{file.name}</span>
                   <span
@@ -240,16 +388,7 @@ export const OfflineTransferForm: FunctionalComponent<
                     e.stopPropagation();
                     handleRemoveFile(idx);
                   }}
-                  style={{
-                    background: "#FF4D4F",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 6,
-                    padding: "4px 14px",
-                    fontSize: 15,
-                    marginLeft: 16,
-                    cursor: "pointer",
-                  }}
+                  style={theme.removeBtn}
                 >
                   移除
                 </button>
@@ -258,42 +397,15 @@ export const OfflineTransferForm: FunctionalComponent<
           </div>
         )}
         {formState.filesError && (
-          <div style={{ color: "#ff4d4f", fontSize: 13, marginTop: 4 }}>
-            {formState.filesError}
-          </div>
+          <div style={theme.error}>{formState.filesError}</div>
         )}
       </div>
       {/* 按钮区 */}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
-        <button
-          type="button"
-          onClick={onClose}
-          style={{
-            background: "#fff",
-            color: "#222",
-            border: "1px solid #E5E6EB",
-            borderRadius: 6,
-            padding: "8px 24px",
-            fontSize: 15,
-            cursor: "pointer",
-          }}
-        >
+        <button type="button" onClick={onClose} style={theme.buttonCancel}>
           取消
         </button>
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            background: "#155EEF",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            padding: "8px 24px",
-            fontSize: 15,
-            cursor: "pointer",
-            fontWeight: 600,
-          }}
-        >
+        <button type="submit" disabled={loading} style={theme.buttonSubmit}>
           去支付
         </button>
       </div>

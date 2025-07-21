@@ -20,60 +20,120 @@ interface OnlineRechargeFormProps {
 export const OnlineRechargeForm: FunctionalComponent<
   OnlineRechargeFormProps
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
-  // 白色主题样式
-  const inputStyle = whiteTheme
+  const theme = whiteTheme
     ? {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        boxSizing: "border-box",
-        border: formState.amountError
-          ? "1px solid #ff4d4f"
-          : "1px solid #E5E6EB",
-        background: "#fff",
-        color: "#222",
-        fontSize: 15,
-        outline: "none",
-        marginBottom: 0,
+        label: {
+          marginBottom: 8,
+          fontSize: 14,
+          color: "#222",
+          textAlign: "left",
+          display: "block",
+        },
+        input: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          boxSizing: "border-box",
+          border: "1px solid #E5E6EB",
+          background: "#fff",
+          color: "#222",
+          fontSize: 15,
+          outline: "none",
+          marginBottom: 0,
+        },
+        inputError: {
+          border: "1px solid #ff4d4f",
+        },
+        select: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          border: "1px solid #E5E6EB",
+          background: "#fff",
+          color: "#222",
+          fontSize: 15,
+          outline: "none",
+        },
+        selectError: {
+          border: "1px solid #ff4d4f",
+        },
+        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        buttonCancel: {
+          background: "#fff",
+          color: "#222",
+          border: "1px solid #E5E6EB",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+        },
+        buttonSubmit: {
+          background: "#155EEF",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+          fontWeight: 600,
+        },
       }
     : {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        boxSizing: "border-box",
-        border: formState.amountError
-          ? "1px solid #ff4d4f"
-          : "1px solid #23262F",
-        background: "#23262F",
-        color: "#fff",
-        fontSize: 15,
-        outline: "none",
-        marginBottom: 0,
-      };
-  const selectStyle = whiteTheme
-    ? {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        border: formState.rechargeChannelError
-          ? "1px solid #ff4d4f"
-          : "1px solid #E5E6EB",
-        background: "#fff",
-        color: "#222",
-        fontSize: 15,
-        outline: "none",
-      }
-    : {
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 6,
-        border: formState.rechargeChannelError
-          ? "1px solid #ff4d4f"
-          : "1px solid #23262F",
-        background: "#23262F",
-        color: "#fff",
-        fontSize: 15,
-        outline: "none",
+        label: {
+          marginBottom: 8,
+          fontSize: 14,
+          color: "#fff",
+          textAlign: "left",
+          display: "block",
+        },
+        input: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          boxSizing: "border-box",
+          border: "1px solid #23262F",
+          background: "#23262F",
+          color: "#fff",
+          fontSize: 15,
+          outline: "none",
+          marginBottom: 0,
+        },
+        inputError: {
+          border: "1px solid #ff4d4f",
+        },
+        select: {
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 6,
+          border: "1px solid #23262F",
+          background: "#23262F",
+          color: "#fff",
+          fontSize: 15,
+          outline: "none",
+        },
+        selectError: {
+          border: "1px solid #ff4d4f",
+        },
+        error: { color: "#ff4d4f", fontSize: 13, marginTop: 4 },
+        buttonCancel: {
+          background: "#23262F",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+        },
+        buttonSubmit: {
+          background: "#00E8C6",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          padding: "8px 24px",
+          fontSize: 15,
+          cursor: "pointer",
+          fontWeight: 600,
+        },
       };
   const selectCurrencyStyle = whiteTheme
     ? {
@@ -97,8 +157,14 @@ export const OnlineRechargeForm: FunctionalComponent<
         outline: "none",
       };
   const labelStyle = whiteTheme
-    ? { marginBottom: 8, fontSize: 14, color: "#222" }
-    : { marginBottom: 8, fontSize: 14 };
+    ? {
+        marginBottom: 8,
+        fontSize: 14,
+        color: "#222",
+        textAlign: "left",
+        display: "block",
+      }
+    : { marginBottom: 8, fontSize: 14, textAlign: "left", display: "block" };
   const errorStyle = { color: "#ff4d4f", fontSize: 13, marginTop: 4 };
   const buttonCancelStyle = whiteTheme
     ? {
@@ -144,11 +210,14 @@ export const OnlineRechargeForm: FunctionalComponent<
   return (
     <>
       <div style={{ marginBottom: 18 }}>
-        <div style={labelStyle}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 充值币种
         </div>
         <select
-          style={selectCurrencyStyle}
+          style={{
+            ...theme.select,
+            // 币种没有错误校验
+          }}
           value={formState.currency}
           onInput={(e) => {
             const value = (e.target as HTMLSelectElement).value;
@@ -164,7 +233,7 @@ export const OnlineRechargeForm: FunctionalComponent<
         </select>
       </div>
       <div style={{ marginBottom: 18 }}>
-        <div style={labelStyle}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 充值金额
         </div>
         <input
@@ -179,18 +248,24 @@ export const OnlineRechargeForm: FunctionalComponent<
               amountError: value.trim() ? "" : state.amountError,
             }));
           }}
-          style={inputStyle}
+          style={{
+            ...theme.input,
+            ...(formState.amountError ? theme.inputError : {}),
+          }}
         />
         {formState.amountError && (
-          <div style={errorStyle}>{formState.amountError}</div>
+          <div style={theme.error}>{formState.amountError}</div>
         )}
       </div>
       <div style={{ marginBottom: 24 }}>
-        <div style={labelStyle}>
+        <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 支付平台
         </div>
         <select
-          style={selectStyle}
+          style={{
+            ...theme.select,
+            ...(formState.rechargeChannelError ? theme.selectError : {}),
+          }}
           value={formState.rechargeChannel}
           onInput={(e) => {
             const value = (e.target as HTMLSelectElement).value;
@@ -206,7 +281,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           <option value="paypal">PayPal</option>
         </select>
         {formState.rechargeChannelError && (
-          <div style={errorStyle}>{formState.rechargeChannelError}</div>
+          <div style={theme.error}>{formState.rechargeChannelError}</div>
         )}
       </div>
       {formState.error && (
