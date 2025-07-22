@@ -1,5 +1,4 @@
 import type { FunctionalComponent } from "preact";
-import { useRef } from "preact/hooks";
 import { Upload } from "../../../common/Upload";
 
 interface OfflineTransferFormProps {
@@ -259,13 +258,6 @@ export const OfflineTransferForm: FunctionalComponent<
     if (!valid) return;
     // 打印表单值
     console.log("OfflineTransferForm values:", formState);
-  };
-
-  // 文件大小格式化
-  const formatSize = (size: number) => {
-    if (size > 1024 * 1024) return (size / 1024 / 1024).toFixed(2) + " MB";
-    if (size > 1024) return (size / 1024).toFixed(2) + " KB";
-    return size + " B";
   };
 
   return (

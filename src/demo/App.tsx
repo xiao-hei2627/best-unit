@@ -1,7 +1,6 @@
 import { npmTest, printCurrentTime } from "../main";
-import { BestUnit } from "../components/business/ModalForm";
+import { BestUnit } from "../components/business/recharge-sdk";
 import { initFundUnit } from "../main";
-import { getAllDicts } from "../api";
 
 export default function DemoApp() {
   initFundUnit({
@@ -11,9 +10,7 @@ export default function DemoApp() {
     biz_type: "ad",
     userId: "123",
   });
-  getAllDicts().then((res) => {
-    console.log(res);
-  });
+
   return (
     <div>
       <h2>组件库可视化测试</h2>

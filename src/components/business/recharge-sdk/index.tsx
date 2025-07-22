@@ -1,7 +1,8 @@
 import { useState } from "preact/hooks";
 import { ThemedButton } from "./components/Button";
-import { ModalForm } from "./components/recharge";
+import { Recharge } from "./components/recharge";
 import register from "preact-custom-element";
+import { getAllDicts } from "../../../api";
 
 export function BestUnit(props: any) {
   const [visible, setVisible] = useState(false);
@@ -14,6 +15,7 @@ export function BestUnit(props: any) {
   }) => {
     console.log("submit", form);
   };
+  getAllDicts();
 
   return (
     <div>
@@ -32,7 +34,7 @@ export function BestUnit(props: any) {
       >
         {whiteTheme ? "切换为暗黑主题" : "切换为白色主题"}
       </button>
-      <ModalForm
+      <Recharge
         visible={visible}
         onClose={() => setVisible(false)}
         onSubmit={handleSubmit}

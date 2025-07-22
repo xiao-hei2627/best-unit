@@ -16,7 +16,7 @@ interface ModalFormProps {
   token?: string;
 }
 
-export function ModalForm({
+export function Recharge({
   visible,
   onClose,
   onSubmit,
