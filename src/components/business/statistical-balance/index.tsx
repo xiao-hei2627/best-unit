@@ -1,6 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import HoverPopover from "../../common/HoverPopover";
 import { getBalance } from "../../../api";
+import register from "preact-custom-element";
 
 // 默认数据，用于加载时显示
 const defaultBalanceData = {
@@ -21,7 +22,7 @@ function formatNumber(num: number) {
   });
 }
 
-export default function StatisticalBalance() {
+function StatisticalBalance() {
   const [balanceData, setBalanceData] = useState(defaultBalanceData);
 
   useEffect(() => {
@@ -149,3 +150,7 @@ export default function StatisticalBalance() {
     </HoverPopover>
   );
 }
+
+register(StatisticalBalance, "best-statistical-balance");
+
+export default StatisticalBalance;
