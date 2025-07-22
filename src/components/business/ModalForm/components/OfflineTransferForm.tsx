@@ -1,11 +1,12 @@
 import type { FunctionalComponent } from "preact";
 import { useRef } from "preact/hooks";
+import { Upload } from "../../../common/Upload";
 
 interface OfflineTransferFormProps {
   formState: {
     platform: string;
     transactionId: string;
-    files: File[];
+    files: string[]; // 绑定url数组
     platformError?: string;
     transactionIdError?: string;
     filesError?: string;
@@ -20,8 +21,6 @@ interface OfflineTransferFormProps {
 export const OfflineTransferForm: FunctionalComponent<
   OfflineTransferFormProps
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   // 样式对象
   const theme = whiteTheme
     ? {
@@ -227,28 +226,6 @@ export const OfflineTransferForm: FunctionalComponent<
         },
       };
 
-  const handleFileChange = (e: any) => {
-    const files = Array.from(e.target.files).slice(0, 10);
-    setFormState((state: any) => ({ ...state, files, filesError: "" }));
-  };
-
-  const handleDrop = (e: any) => {
-    e.preventDefault();
-    const files = Array.from(e.dataTransfer.files).slice(0, 10);
-    setFormState((state: any) => ({ ...state, files, filesError: "" }));
-  };
-
-  const handleDragOver = (e: any) => {
-    e.preventDefault();
-  };
-
-  const handleRemoveFile = (idx: number) => {
-    setFormState((state: any) => ({
-      ...state,
-      files: state.files.filter((_: File, i: number) => i !== idx),
-    }));
-  };
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     let valid = true;
@@ -349,57 +326,19 @@ export const OfflineTransferForm: FunctionalComponent<
         <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> 上传文件
         </div>
-        <div
-          style={{
-            ...theme.upload,
-            ...(formState.filesError ? theme.uploadError : {}),
-          }}
-          onClick={() => fileInputRef.current?.click()}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-        >
-          <div style={{ fontSize: 48, marginBottom: 12 }}>📁</div>
-          <div style={{ color: "#222", fontSize: 15, marginBottom: 4 }}>
-            点击或拖拽文件到此处上传
-          </div>
-          <div style={{ color: "#999", fontSize: 13 }}>
-            支持 JPG、PNG、PDF 格式，单个文件不超过 20MB，最多上传 10 个文件
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            multiple
-            accept=".jpg,.jpeg,.png,.pdf"
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-          />
-        </div>
-        {formState.files && formState.files.length > 0 && (
-          <div style={{ marginTop: 12 }}>
-            {formState.files.map((file, idx) => (
-              <div key={idx} style={theme.fileItem}>
-                <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-                  <span style={{ fontWeight: 500 }}>{file.name}</span>
-                  <span
-                    style={{ color: "#8C8F93", fontSize: 13, marginLeft: 8 }}
-                  >
-                    ({formatSize(file.size)})
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRemoveFile(idx);
-                  }}
-                  style={theme.removeBtn}
-                >
-                  移除
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+        <Upload
+          value={formState.files}
+          onChange={(urls) =>
+            setFormState((state: any) => ({
+              ...state,
+              files: urls,
+              filesError: "",
+            }))
+          }
+          maxCount={10}
+          accept={".jpg,.jpeg,.png,.pdf"}
+          multiple={true}
+        />
         {formState.filesError && (
           <div style={theme.error}>{formState.filesError}</div>
         )}
