@@ -25,7 +25,7 @@ export function Recharge({
 }: ModalFormProps & { whiteTheme?: boolean }) {
   const [formState, setFormState] = useState({
     amount: "",
-    rechargeChannel: "paypal",
+    rechargeChannel: "",
     currency: "USD",
     loading: false,
     error: "",
@@ -35,7 +35,7 @@ export function Recharge({
   });
   const [activeTab, setActiveTab] = useState<"online" | "offline">("online");
   const [offlineFormState, setOfflineFormState] = useState({
-    platform: "paypal",
+    platform: "",
     transactionId: "",
     files: [],
     platformError: "",
@@ -50,7 +50,7 @@ export function Recharge({
       setActiveTab("online");
       setFormState({
         amount: "",
-        rechargeChannel: "paypal",
+        rechargeChannel: "",
         currency: "USD",
         loading: false,
         error: "",
@@ -59,7 +59,7 @@ export function Recharge({
         currencyError: "",
       });
       setOfflineFormState({
-        platform: "paypal",
+        platform: "",
         transactionId: "",
         files: [],
         platformError: "",

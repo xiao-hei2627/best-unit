@@ -2,22 +2,26 @@ export function initFundUnit(params: {
   token: string;
   merchant_id: string;
   biz_type: string;
-  userId: string;
+  user_id: string;
   theme?: string;
-  locale?: string;
 }) {
-  const { merchant_id, biz_type, theme, locale, userId } = params;
+  const { merchant_id, biz_type, theme, user_id } = params;
   const token = "Bearer " + params.token;
   sessionStorage.setItem(
     "fund_unit_params",
-    JSON.stringify({ ...params, token })
+    JSON.stringify({
+      merchantId: merchant_id,
+      bizType: biz_type,
+      userId: user_id,
+      token,
+      theme,
+    })
   );
   return {
     token,
-    merchant_id,
-    biz_type,
+    merchantId: merchant_id,
+    bizType: biz_type,
     theme,
-    locale,
-    userId,
+    userId: user_id,
   };
 }

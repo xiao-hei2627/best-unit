@@ -2,7 +2,8 @@ import { useState } from "preact/hooks";
 import { ThemedButton } from "./components/Button";
 import { Recharge } from "./components/recharge";
 import register from "preact-custom-element";
-import { getAllDicts } from "../../../api";
+import { createOnlineRecharge, getAllDicts } from "../../../api";
+getAllDicts();
 
 export function BestUnit(props: any) {
   const [visible, setVisible] = useState(false);
@@ -13,9 +14,13 @@ export function BestUnit(props: any) {
     rechargeChannel: string;
     currency: string;
   }) => {
-    console.log("submit", form);
+    const result = await createOnlineRecharge({
+      amount: form.amount,
+      currency: form.currency,
+      rechargeChannel: form.rechargeChannel,
+    });
+    window.open(result, "_blank");
   };
-  getAllDicts();
 
   return (
     <div>

@@ -8,7 +8,7 @@ export default function DemoApp() {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM0MTM1MjksIm1lcmNoYW50X2lkIjoxMTI4LCJ0aW1lc3RhbXAiOjE3NTMxNTQzMjl9.UAvzq0P4HCnbJR1Ga3CgF6q3vk2RHiZRvnAFohBTHpw",
     merchant_id: "1128",
     biz_type: "ad",
-    userId: "123",
+    user_id: "123",
   });
 
   return (

@@ -20,6 +20,12 @@ interface OnlineRechargeFormProps {
 export const OnlineRechargeForm: FunctionalComponent<
   OnlineRechargeFormProps
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
+  const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
+  const currencyDict = allDicts.currency;
+  const channelDict = allDicts.channel.filter(
+    (item: any) => item.payment_support
+  );
+
   const theme = whiteTheme
     ? {
         label: {
@@ -237,9 +243,12 @@ export const OnlineRechargeForm: FunctionalComponent<
             }));
           }}
         >
-          <option value="USD">USD - 美元</option>
-          <option value="CNY">CNY - 人民币</option>
-          <option value="EUR">EUR - 欧元</option>
+          <option value="" disabled hidden>
+            请选择充值币种
+          </option>
+          {currencyDict.map((item: any) => (
+            <option value={item.value}>{item.label}</option>
+          ))}
         </select>
       </div>
       <div style={{ marginBottom: 18 }}>
@@ -286,9 +295,12 @@ export const OnlineRechargeForm: FunctionalComponent<
             }));
           }}
         >
-          <option value="alipay">支付宝</option>
-          <option value="wechat">微信</option>
-          <option value="paypal">PayPal</option>
+          <option value="" disabled hidden>
+            请选择支付平台
+          </option>
+          {channelDict.map((item: any) => (
+            <option value={item.value}>{item.label}</option>
+          ))}
         </select>
         {formState.rechargeChannelError && (
           <div style={theme.error}>{formState.rechargeChannelError}</div>

@@ -59,9 +59,7 @@ export const createOfflineRecharge = async (data: any) => {
     transfer_channel: data.transferChannel,
     voucher_urls: data.voucherUrls,
   };
-  return http.post("/offline/recharge/create", params, {}).then((res) => {
-    return res.data.redirect_url;
-  });
+  return http.post("/offline/recharge/create", params, {});
 };
 
 // 创建在线充值
@@ -69,6 +67,8 @@ export const createOnlineRecharge = async (data: any) => {
   const fundUnitParams = JSON.parse(
     sessionStorage.getItem("fund_unit_params") || "{}"
   );
+
+  console.log(fundUnitParams, "fundUnitParams");
 
   const params = {
     merchant_id: Number(fundUnitParams.merchantId),

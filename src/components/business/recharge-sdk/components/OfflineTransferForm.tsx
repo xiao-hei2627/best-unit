@@ -1,5 +1,7 @@
 import type { FunctionalComponent } from "preact";
 import { Upload } from "../../../common/Upload";
+import { createOfflineRecharge } from "../../../../api";
+import { message } from "../../../common/Message";
 
 interface OfflineTransferFormProps {
   formState: {
@@ -20,6 +22,10 @@ interface OfflineTransferFormProps {
 export const OfflineTransferForm: FunctionalComponent<
   OfflineTransferFormProps
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
+  const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
+  console.log(allDicts, "allDicts");
+  const channelDict = allDicts.channel;
+
   // 样式对象
   const theme = whiteTheme
     ? {
@@ -225,7 +231,7 @@ export const OfflineTransferForm: FunctionalComponent<
         },
       };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     let valid = true;
     setFormState((state: any) => ({
@@ -256,8 +262,13 @@ export const OfflineTransferForm: FunctionalComponent<
       valid = false;
     }
     if (!valid) return;
-    // 打印表单值
-    console.log("OfflineTransferForm values:", formState);
+    await createOfflineRecharge({
+      transferChannel: formState.platform,
+      transferNo: formState.transactionId,
+      voucherUrls: formState.files,
+    });
+    onClose();
+    message.success("离线充值创建成功");
   };
 
   return (
@@ -281,9 +292,12 @@ export const OfflineTransferForm: FunctionalComponent<
             }));
           }}
         >
-          <option value="paypal">PayPal</option>
-          <option value="alipay">支付宝</option>
-          <option value="wechat">微信</option>
+          <option value="" disabled hidden>
+            请选择支付平台
+          </option>
+          {channelDict.map((item: any) => (
+            <option value={item.value}>{item.label}</option>
+          ))}
         </select>
         {formState.platformError && (
           <div style={theme.error}>{formState.platformError}</div>
