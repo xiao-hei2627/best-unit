@@ -24,7 +24,7 @@ export const OfflineTransferForm: FunctionalComponent<
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
   const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
   console.log(allDicts, "allDicts");
-  const channelDict = allDicts.channel;
+  const channelDict = allDicts?.channel || [];
 
   // 样式对象
   const theme = whiteTheme
@@ -295,7 +295,7 @@ export const OfflineTransferForm: FunctionalComponent<
           <option value="" disabled hidden>
             请选择支付平台
           </option>
-          {channelDict.map((item: any) => (
+          {channelDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
           ))}
         </select>

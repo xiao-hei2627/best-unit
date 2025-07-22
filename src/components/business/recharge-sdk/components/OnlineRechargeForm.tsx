@@ -21,10 +21,9 @@ export const OnlineRechargeForm: FunctionalComponent<
   OnlineRechargeFormProps
 > = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
   const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
-  const currencyDict = allDicts.currency;
-  const channelDict = allDicts.channel.filter(
-    (item: any) => item.payment_support
-  );
+  const currencyDict = allDicts?.currency || [];
+  const channelDict =
+    allDicts?.channel?.filter((item: any) => item.payment_support) || [];
 
   const theme = whiteTheme
     ? {
@@ -246,7 +245,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           <option value="" disabled hidden>
             请选择充值币种
           </option>
-          {currencyDict.map((item: any) => (
+          {currencyDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
           ))}
         </select>
@@ -298,7 +297,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           <option value="" disabled hidden>
             请选择支付平台
           </option>
-          {channelDict.map((item: any) => (
+          {channelDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
           ))}
         </select>
