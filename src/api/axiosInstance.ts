@@ -4,6 +4,7 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { message } from "../components/common/Message";
 
 export interface CreateAxiosOptions {
   baseURL?: string;
@@ -48,17 +49,29 @@ export function createAxiosInstance(options: CreateAxiosOptions = {}) {
       if (response.data && response.data.code === 0) {
         return response.data;
       }
+      const errorMsg =
+        response.data?.msg || response.data?.message || "未知错误";
+
+      // 显示错误消息
+      message.error(errorMsg);
+
       if (onError) {
-        onError(
-          response.data?.msg || response.data?.message || "未知错误",
-          response
-        );
+        onError(errorMsg, response);
       }
       return Promise.reject(response.data || { message: "未知错误" });
     },
     (error) => {
+      const errorMsg =
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        error.message ||
+        "网络请求失败";
+
+      // 显示错误消息
+      message.error(errorMsg);
+
       if (onError) {
-        onError(error.message, error);
+        onError(errorMsg, error);
       }
       return Promise.reject(error);
     }
