@@ -44,6 +44,55 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
             />
           </svg>
         );
+      case "success":
+        return (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="8" fill="#52c41a" />
+            <path
+              d="M5 8.5l2.2 2.2 3.8-3.4"
+              stroke="white"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+        );
+      case "warning":
+        return (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="8" fill="#faad14" />
+            <path
+              d="M8 4.5v5"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <circle cx="8" cy="12.5" r="1" fill="white" />
+          </svg>
+        );
+      case "info":
+        return (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="8" fill="#1677ff" />
+            <rect
+              x="7.25"
+              y="7"
+              width="1.5"
+              height="6"
+              rx="0.75"
+              fill="white"
+            />
+            <rect
+              x="7.25"
+              y="5"
+              width="1.5"
+              height="1.5"
+              rx="0.75"
+              fill="white"
+            />
+          </svg>
+        );
       default:
         return null;
     }
@@ -169,6 +218,50 @@ class MessageManager {
       iconSvg.innerHTML = `
         <circle cx="8" cy="8" r="8" fill="#ff4d4f"/>
         <path d="M10.5 5.5l-5 5m0-5l5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      `;
+      messageDiv.appendChild(iconSvg);
+    }
+    if (type === "success") {
+      const iconSvg = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+      iconSvg.setAttribute("width", "16");
+      iconSvg.setAttribute("height", "16");
+      iconSvg.setAttribute("viewBox", "0 0 16 16");
+      iconSvg.innerHTML = `
+        <circle cx="8" cy="8" r="8" fill="#52c41a"/>
+        <path d="M5 8.5l2.2 2.2 3.8-3.4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      `;
+      messageDiv.appendChild(iconSvg);
+    }
+    if (type === "warning") {
+      const iconSvg = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+      iconSvg.setAttribute("width", "16");
+      iconSvg.setAttribute("height", "16");
+      iconSvg.setAttribute("viewBox", "0 0 16 16");
+      iconSvg.innerHTML = `
+        <circle cx="8" cy="8" r="8" fill="#faad14"/>
+        <path d="M8 4.5v5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="8" cy="12.5" r="1" fill="white"/>
+      `;
+      messageDiv.appendChild(iconSvg);
+    }
+    if (type === "info") {
+      const iconSvg = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+      iconSvg.setAttribute("width", "16");
+      iconSvg.setAttribute("height", "16");
+      iconSvg.setAttribute("viewBox", "0 0 16 16");
+      iconSvg.innerHTML = `
+        <circle cx="8" cy="8" r="8" fill="#1677ff"/>
+        <rect x="7.25" y="7" width="1.5" height="6" rx="0.75" fill="white"/>
+        <rect x="7.25" y="5" width="1.5" height="1.5" rx="0.75" fill="white"/>
       `;
       messageDiv.appendChild(iconSvg);
     }
