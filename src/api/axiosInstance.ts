@@ -9,29 +9,23 @@ import { message } from "../components/common/Message";
 export interface CreateAxiosOptions {
   baseURL?: string;
   timeout?: number;
-  getToken?: () => string | null;
   getLocale?: () => string | null;
   onError?: (msg: string, error: any) => void;
 }
 
 export function createAxiosInstance(options: CreateAxiosOptions = {}) {
-  const {
-    baseURL = "/api",
-    timeout = 10000,
-    getToken,
-    getLocale,
-    onError,
-  } = options;
+  const { baseURL = "/api", timeout = 10000, getLocale, onError } = options;
 
   const instance: AxiosInstance = axios.create({ baseURL, timeout });
 
   // 请求拦截：加 token、国际化
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    if (getToken) {
-      const token = getToken();
-      if (token)
-        config.headers = { ...config.headers, Authorization: token } as any;
-    }
+    const fundUnitParams = JSON.parse(
+      sessionStorage.getItem("fund_unit_params") || "{}"
+    );
+    const { token } = fundUnitParams;
+    config.headers = { ...config.headers, Authorization: token } as any;
+
     if (getLocale) {
       const locale = getLocale();
       if (locale)
