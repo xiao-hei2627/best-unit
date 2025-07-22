@@ -358,13 +358,7 @@ export const OfflineTransferForm: FunctionalComponent<
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
-          <div style={{ fontSize: 48, marginBottom: 12 }}>
-            {/* 优化后的上传图标 */}
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-              <rect x="8" y="8" width="48" height="48" rx="12" fill="#F4F6FA" />
-              <rect x="28" y="20" width="8" height="24" rx="4" fill="#E5E6EB" />
-            </svg>
-          </div>
+          <div style={{ fontSize: 48, marginBottom: 12 }}>📁</div>
           <div style={{ color: "#222", fontSize: 15, marginBottom: 4 }}>
             点击或拖拽文件到此处上传
           </div>
