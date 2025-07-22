@@ -1,6 +1,7 @@
 import { npmTest, printCurrentTime } from "../main";
 import { BestUnit } from "../components/business/recharge-sdk";
 import { initFundUnit } from "../main";
+import StatisticalBalance from "../components/business/statistical-balance";
 
 export default function DemoApp() {
   initFundUnit({
@@ -14,6 +15,7 @@ export default function DemoApp() {
   return (
     <div>
       <h2>组件库可视化测试</h2>
+
       <div>
         <h3>BestUnit 组件演示：</h3>
         <BestUnit
@@ -29,6 +31,10 @@ export default function DemoApp() {
           调用 npmTest()
         </button>
         <button onClick={printCurrentTime}>调用 printCurrentTime()</button>
+      </div>
+      <div>
+        <h3>余额卡片组件演示：</h3>
+        <StatisticalBalance />
       </div>
     </div>
   );

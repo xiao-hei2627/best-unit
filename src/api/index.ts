@@ -5,12 +5,21 @@ export function getBalance() {
   const fundUnitParams = JSON.parse(
     sessionStorage.getItem("fund_unit_params") || "{}"
   );
-  return http.get("/balance", {
-    params: {
-      merchant_id: fundUnitParams.merchant_id,
-      biz_type: fundUnitParams.biz_type,
-    },
-  });
+  return http
+    .get("/balance", {
+      params: {
+        merchant_id: fundUnitParams.merchant_id,
+        biz_type: fundUnitParams.biz_type,
+      },
+    })
+    .then((res) => {
+      const data = res.data;
+      return {
+        totalAmount: data.total_amount || 0,
+        availableAmount: data.available_amount || 0,
+        frozenAmount: data.frozen_amount || 0,
+      };
+    });
 }
 
 // 获取所有字典

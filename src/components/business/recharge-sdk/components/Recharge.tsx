@@ -219,6 +219,7 @@ export function Recharge({
           padding: 32,
           borderRadius: 12,
           minWidth: 400,
+          maxWidth: 400,
           color: color || theme.modalColor,
           boxShadow: theme.modalBoxShadow,
           position: "relative",
