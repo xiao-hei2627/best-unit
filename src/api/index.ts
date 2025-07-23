@@ -8,8 +8,8 @@ export function getBalance() {
   return http
     .get("/balance", {
       params: {
-        merchant_id: fundUnitParams.merchant_id,
-        biz_type: fundUnitParams.biz_type,
+        merchant_id: fundUnitParams.merchantId,
+        biz_type: fundUnitParams.bizType,
       },
     })
     .then((res) => {
