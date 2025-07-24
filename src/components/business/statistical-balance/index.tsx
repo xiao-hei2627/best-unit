@@ -17,9 +17,9 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
     currency: "USD",
     symbol: "$",
     details: [
-      { label: "", value: 0, color: "#15b36b", dot: "#15b36b" },
-      { label: "", value: 0, color: "#f59e0b", dot: "#f59e0b" },
-      { label: "", value: 0, color: "#155EEF", dot: "#15b36b" },
+      { label: t("真实金额"), value: 0, color: "#15b36b", dot: "#15b36b" },
+      { label: t("冻结金额"), value: 0, color: "#f59e0b", dot: "#f59e0b" },
+      { label: t("总可用"), value: 0, color: "#155EEF", dot: "#15b36b" },
     ],
   });
 

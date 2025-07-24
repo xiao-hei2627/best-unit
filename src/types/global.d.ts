@@ -6,7 +6,6 @@ export declare function initFundUnit(params: {
   token: string;
   merchant_id: string;
   biz_type: string;
-  user_id: string;
   theme?: string;
   locale?: "zh" | "en";
 }): {
