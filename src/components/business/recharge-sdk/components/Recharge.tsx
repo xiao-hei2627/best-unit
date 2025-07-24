@@ -142,7 +142,7 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
         tabBtn: (active: boolean, left: boolean) => ({
           flex: 1,
           background: active ? "#fff" : "#F7F8FA",
-          color: active ? "#155EEF" : "#222",
+          color: active ? "#1890ff" : "#222",
           border: "none",
           borderRadius: left ? "8px 0 0 8px" : "0 8px 8px 0",
           fontWeight: active ? 600 : 400,

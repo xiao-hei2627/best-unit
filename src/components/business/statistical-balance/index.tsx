@@ -119,7 +119,7 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
     details: [
       { label: t("真实金额"), value: 0, color: "#15b36b", dot: "#15b36b" },
       { label: t("冻结金额"), value: 0, color: "#f59e0b", dot: "#f59e0b" },
-      { label: t("总可用"), value: 0, color: "#155EEF", dot: "#15b36b" },
+      { label: t("总可用"), value: 0, color: "#1890ff", dot: "#15b36b" },
     ],
   });
 
@@ -149,7 +149,7 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
             {
               label: t("总可用"),
               value: balance.availableAmount,
-              color: "#155EEF",
+              color: "#1890ff",
               dot: "#15b36b",
             },
           ],

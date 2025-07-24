@@ -15,7 +15,7 @@ export function ThemedButton({ onClick, color, children }: ButtonProps) {
   const whiteTheme = fundUnitParams.theme === Theme.WHITE;
   const style = whiteTheme
     ? {
-        background: color || "#155EEF",
+        background: color || "#1890ff",
         color: "#fff",
         border: "none",
         borderRadius: 6,

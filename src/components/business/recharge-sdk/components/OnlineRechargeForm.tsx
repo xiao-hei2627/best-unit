@@ -83,7 +83,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           cursor: "pointer",
         },
         buttonSubmit: {
-          background: "#155EEF",
+          background: "#1890ff",
           color: "#fff",
           border: "none",
           borderRadius: 6,
@@ -207,7 +207,7 @@ export const OnlineRechargeForm: FunctionalComponent<
       };
   const buttonSubmitStyle = whiteTheme
     ? {
-        background: "#155EEF",
+        background: "#1890ff",
         color: "#fff",
         border: "none",
         borderRadius: 6,

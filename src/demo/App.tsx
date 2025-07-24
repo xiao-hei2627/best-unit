@@ -84,13 +84,13 @@ export default function DemoApp() {
               padding: "8px 16px",
               backgroundColor:
                 currentLocale === "zh"
-                  ? "#155EEF"
+                  ? "#1890ff"
                   : isDark
                   ? "#23262F"
                   : "#fff",
               color:
                 currentLocale === "zh" ? "#fff" : isDark ? "#F5F6FA" : "#333",
-              border: "1px solid #155EEF",
+              border: "1px solid #1890ff",
               borderRadius: 6,
               cursor: "pointer",
               fontWeight: currentLocale === "zh" ? "bold" : "normal",
@@ -104,13 +104,13 @@ export default function DemoApp() {
               padding: "8px 16px",
               backgroundColor:
                 currentLocale === "en"
-                  ? "#155EEF"
+                  ? "#1890ff"
                   : isDark
                   ? "#23262F"
                   : "#fff",
               color:
                 currentLocale === "en" ? "#fff" : isDark ? "#F5F6FA" : "#333",
-              border: "1px solid #155EEF",
+              border: "1px solid #1890ff",
               borderRadius: 6,
               cursor: "pointer",
               fontWeight: currentLocale === "en" ? "bold" : "normal",
@@ -142,7 +142,7 @@ export default function DemoApp() {
             padding: "8px 16px",
             backgroundColor:
               currentTheme === Theme.WHITE
-                ? "#155EEF"
+                ? "#1890ff"
                 : isDark
                 ? "#23262F"
                 : "#fff",
@@ -152,7 +152,7 @@ export default function DemoApp() {
                 : isDark
                 ? "#F5F6FA"
                 : "#333",
-            border: "1px solid #155EEF",
+            border: "1px solid #1890ff",
             borderRadius: 6,
             cursor: "pointer",
             fontWeight: currentTheme === Theme.WHITE ? "bold" : "normal",
@@ -167,7 +167,7 @@ export default function DemoApp() {
             padding: "8px 16px",
             backgroundColor:
               currentTheme === Theme.DARK
-                ? "#155EEF"
+                ? "#1890ff"
                 : isDark
                 ? "#23262F"
                 : "#fff",
@@ -177,7 +177,7 @@ export default function DemoApp() {
                 : isDark
                 ? "#F5F6FA"
                 : "#333",
-            border: "1px solid #155EEF",
+            border: "1px solid #1890ff",
             borderRadius: 6,
             cursor: "pointer",
             fontWeight: currentTheme === Theme.DARK ? "bold" : "normal",
