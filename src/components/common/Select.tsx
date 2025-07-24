@@ -1,6 +1,7 @@
 import type { FunctionalComponent, JSX } from "preact";
 import { useState, useRef, useEffect } from "preact/hooks";
 import { Theme } from "../../types";
+import { t } from "../../local";
 
 interface Option {
   value: string;
@@ -221,7 +222,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
                 viewBox="0 0 64 41"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <title>暂无数据</title>
+                <title>{t("暂无数据")}</title>
                 <g transform="translate(0 1)" fill="none" fillRule="evenodd">
                   <ellipse
                     fill="#f5f5f5"
@@ -240,7 +241,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
                 </g>
               </svg>
               <div style={{ marginTop: 8, color: "#bfbfbf", fontSize: 15 }}>
-                暂无数据
+                {t("暂无数据")}
               </div>
             </div>
           )}

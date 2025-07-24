@@ -5,6 +5,7 @@ export const en: Record<string, string> = {
   真实金额: "Real Amount",
   冻结金额: "Frozen Amount",
   总可用: "Total Available",
+  暂无数据: "No Data",
 
   // 充值相关
   "充值 / 转账": "Recharge / Transfer",
