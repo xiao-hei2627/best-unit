@@ -56,7 +56,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
   // 弹层定位样式
   let popoverStyle: any = {
     position: "absolute",
-    zIndex: 10,
+    zIndex: 999,
     background: "#fff",
     color: "#222",
     borderRadius: 6,

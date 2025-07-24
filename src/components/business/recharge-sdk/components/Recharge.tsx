@@ -1,6 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import { OnlineRechargeForm } from "./OnlineRechargeForm";
 import { OfflineTransferForm } from "./OfflineTransferForm";
+import { t } from "../../../../local";
 
 interface ModalFormProps {
   visible: boolean;
@@ -81,13 +82,13 @@ export function Recharge({
       rechargeChannelError: "",
     }));
     if (!formState.amount.trim()) {
-      setFormState((state) => ({ ...state, amountError: "请输入充值金额" }));
+      setFormState((state) => ({ ...state, amountError: t("请输入充值金额") }));
       valid = false;
     }
     if (!formState.rechargeChannel) {
       setFormState((state) => ({
         ...state,
-        rechargeChannelError: "请选择支付平台",
+        rechargeChannelError: t("请选择支付平台"),
       }));
       valid = false;
     }
@@ -101,7 +102,7 @@ export function Recharge({
       });
       onClose();
     } catch {
-      setFormState((state) => ({ ...state, error: "提交失败，请重试" }));
+      setFormState((state) => ({ ...state, error: t("提交失败，请重试") }));
     } finally {
       setFormState((state) => ({ ...state, loading: false }));
     }
@@ -231,11 +232,11 @@ export function Recharge({
           type="button"
           onClick={onClose}
           style={theme.closeBtn}
-          aria-label="关闭"
+          aria-label={t("关闭")}
         >
           ×
         </button>
-        <div style={theme.title}>充值 / 转账</div>
+        <div style={theme.title}>{t("充值 / 转账")}</div>
         {/* tab 按钮区域 */}
         <div style={{ display: "flex", marginBottom: 28 }}>
           <button
@@ -243,14 +244,14 @@ export function Recharge({
             onClick={() => setActiveTab("online")}
             style={theme.tabBtn(activeTab === "online", true)}
           >
-            在线充值
+            {t("在线充值")}
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("offline")}
             style={theme.tabBtn(activeTab === "offline", false)}
           >
-            线下转账
+            {t("线下转账")}
           </button>
         </div>
         {/* tab 内容区域 */}

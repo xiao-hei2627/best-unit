@@ -8,12 +8,14 @@ export declare function initFundUnit(params: {
   biz_type: string;
   user_id: string;
   theme?: string;
+  locale?: "zh" | "en";
 }): {
   token: string;
   merchantId: string;
   bizType: string;
   theme?: string;
   userId: string;
+  locale: "zh" | "en";
 };
 
 // Vite 代理配置类型
@@ -33,6 +35,7 @@ declare global {
         token: string;
         merchant_id: string;
         biz_type: string;
+        locale?: "zh" | "en";
       }) => void;
     };
   }

@@ -2,13 +2,14 @@ import { useState } from "preact/hooks";
 import { ThemedButton } from "./components/Button";
 import { Recharge } from "./components/Recharge";
 import register from "preact-custom-element";
-import { createOnlineRecharge, getAllDicts } from "../../../api";
-getAllDicts();
+import { createOnlineRecharge } from "../../../api";
+import { t } from "../../../local";
 
 export function BestUnit(props: any) {
   const [visible, setVisible] = useState(false);
   const [whiteTheme, setWhiteTheme] = useState(true);
   const color = props.theme?.primaryColor;
+
   const handleSubmit = async (form: {
     amount: string;
     rechargeChannel: string;
@@ -25,7 +26,7 @@ export function BestUnit(props: any) {
   return (
     <div>
       <ThemedButton color={color} onClick={() => setVisible(true)}>
-        打开表单
+        {t("充值/转账")}
       </ThemedButton>
       <button
         style={{
@@ -37,7 +38,7 @@ export function BestUnit(props: any) {
         }}
         onClick={() => setWhiteTheme((v) => !v)}
       >
-        {whiteTheme ? "切换为暗黑主题" : "切换为白色主题"}
+        {whiteTheme ? t("切换为暗黑主题") : t("切换为白色主题")}
       </button>
       <Recharge
         visible={visible}

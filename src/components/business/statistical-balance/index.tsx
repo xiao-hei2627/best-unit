@@ -1,19 +1,8 @@
 import { useState, useEffect } from "preact/hooks";
 import HoverPopover, { type PopoverPosition } from "../../common/HoverPopover";
 import { getBalance } from "../../../api";
+import { t } from "../../../local";
 import register from "preact-custom-element";
-
-// 默认数据，用于加载时显示
-const defaultBalanceData = {
-  available: 0,
-  currency: "USD",
-  symbol: "$",
-  details: [
-    { label: "真实金额", value: 0, color: "#15b36b", dot: "#15b36b" },
-    { label: "冻结金额", value: 0, color: "#f59e0b", dot: "#f59e0b" },
-    { label: "总可用", value: 0, color: "#155EEF", dot: "#15b36b" },
-  ],
-};
 
 function formatNumber(num: number) {
   return num.toLocaleString("en-US", {
@@ -23,7 +12,16 @@ function formatNumber(num: number) {
 }
 
 function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
-  const [balanceData, setBalanceData] = useState(defaultBalanceData);
+  const [balanceData, setBalanceData] = useState({
+    available: 0,
+    currency: "USD",
+    symbol: "$",
+    details: [
+      { label: "", value: 0, color: "#15b36b", dot: "#15b36b" },
+      { label: "", value: 0, color: "#f59e0b", dot: "#f59e0b" },
+      { label: "", value: 0, color: "#155EEF", dot: "#15b36b" },
+    ],
+  });
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -37,19 +35,19 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
           symbol: "$",
           details: [
             {
-              label: "真实金额",
+              label: t("真实金额"),
               value: balance.totalAmount,
               color: "#15b36b",
               dot: "#15b36b",
             },
             {
-              label: "冻结金额",
+              label: t("冻结金额"),
               value: balance.frozenAmount,
               color: "#f59e0b",
               dot: "#f59e0b",
             },
             {
-              label: "总可用",
+              label: t("总可用"),
               value: balance.availableAmount,
               color: "#155EEF",
               dot: "#15b36b",
@@ -80,7 +78,7 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
               textAlign: "center",
             }}
           >
-            余额详情
+            {t("余额详情")}
           </div>
           {balanceData.details.map((item) => (
             <div

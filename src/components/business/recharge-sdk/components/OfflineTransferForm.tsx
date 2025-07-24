@@ -2,6 +2,7 @@ import type { FunctionalComponent } from "preact";
 import { Upload } from "../../../common/Upload";
 import { createOfflineRecharge } from "../../../../api";
 import { message } from "../../../common/Message";
+import { t } from "../../../../local";
 
 interface OfflineTransferFormProps {
   formState: {
@@ -243,21 +244,21 @@ export const OfflineTransferForm: FunctionalComponent<
     if (!formState.platform) {
       setFormState((state: any) => ({
         ...state,
-        platformError: "请选择支付平台",
+        platformError: t("请选择支付平台"),
       }));
       valid = false;
     }
     if (!formState.transactionId.trim()) {
       setFormState((state: any) => ({
         ...state,
-        transactionIdError: "请输入转账交易ID",
+        transactionIdError: t("请输入转账交易ID"),
       }));
       valid = false;
     }
     if (!formState.files || formState.files.length === 0) {
       setFormState((state: any) => ({
         ...state,
-        filesError: "请上传转账凭证",
+        filesError: t("请上传转账凭证"),
       }));
       valid = false;
     }
@@ -268,14 +269,14 @@ export const OfflineTransferForm: FunctionalComponent<
       voucherUrls: formState.files,
     });
     onClose();
-    message.success("离线充值创建成功");
+    message.success(t("离线充值创建成功"));
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div style={{ marginBottom: 18 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 第三方支付平台
+          <span style={{ color: "#F53F3F" }}>*</span> {t("第三方支付平台")}
         </div>
         <select
           style={{
@@ -293,7 +294,7 @@ export const OfflineTransferForm: FunctionalComponent<
           }}
         >
           <option value="" disabled hidden>
-            请选择支付平台
+            {t("请选择支付平台")}
           </option>
           {channelDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
@@ -305,11 +306,11 @@ export const OfflineTransferForm: FunctionalComponent<
       </div>
       <div style={{ marginBottom: 18 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 交易ID
+          <span style={{ color: "#F53F3F" }}>*</span> {t("交易ID")}
         </div>
         <input
           type="text"
-          placeholder="请输入转账交易ID"
+          placeholder={t("请输入转账交易ID")}
           value={formState.transactionId}
           onInput={(e) => {
             const value = (e.target as HTMLInputElement).value;
@@ -330,7 +331,7 @@ export const OfflineTransferForm: FunctionalComponent<
       </div>
       <div style={{ marginBottom: 24 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 上传文件
+          <span style={{ color: "#F53F3F" }}>*</span> {t("上传文件")}
         </div>
         <Upload
           value={formState.files}
@@ -352,10 +353,10 @@ export const OfflineTransferForm: FunctionalComponent<
       {/* 按钮区 */}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
         <button type="button" onClick={onClose} style={theme.buttonCancel}>
-          取消
+          {t("取消")}
         </button>
         <button type="submit" disabled={loading} style={theme.buttonSubmit}>
-          去支付
+          {t("去支付")}
         </button>
       </div>
     </form>

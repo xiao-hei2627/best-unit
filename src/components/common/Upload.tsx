@@ -1,6 +1,7 @@
 import type { FunctionalComponent } from "preact";
 import { useRef, useState } from "preact/hooks";
 import { uploadFile } from "../../api";
+import { t } from "../../local";
 
 interface UploadProps {
   value?: string[];
@@ -78,11 +79,11 @@ export const Upload: FunctionalComponent<UploadProps> = ({
       >
         <div style={{ fontSize: 48, marginBottom: 12 }}>📁</div>
         <div style={{ color: "#222", fontSize: 15, marginBottom: 4 }}>
-          点击或拖拽文件到此处上传
+          {t("点击或拖拽文件到此处上传")}
         </div>
         <div style={{ color: "#999", fontSize: 13 }}>
-          支持 JPG、PNG、PDF 格式，单个文件不超过 20MB，最多上传 {maxCount}{" "}
-          个文件
+          {t("支持 JPG、PNG、PDF 格式，单个文件不超过 20MB，最多上传")}{" "}
+          {maxCount} {t("个文件")}
         </div>
         <input
           ref={fileInputRef}
@@ -95,7 +96,7 @@ export const Upload: FunctionalComponent<UploadProps> = ({
         />
         {uploading && (
           <div style={{ marginTop: 12, color: "#1677ff" }}>
-            正在上传... {progress}%
+            {t("正在上传...")} {progress}%
           </div>
         )}
       </div>
@@ -121,7 +122,7 @@ export const Upload: FunctionalComponent<UploadProps> = ({
                   {url.split("/").pop()}
                 </span>
                 <span style={{ color: "#8C8F93", fontSize: 13, marginLeft: 8 }}>
-                  [已上传]
+                  [{t("已上传")}]
                 </span>
               </div>
               <button
@@ -142,7 +143,7 @@ export const Upload: FunctionalComponent<UploadProps> = ({
                 }}
                 disabled={disabled}
               >
-                移除
+                {t("移除")}
               </button>
             </div>
           ))}

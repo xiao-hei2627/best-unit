@@ -1,4 +1,5 @@
 import type { FunctionalComponent } from "preact";
+import { t } from "../../../../local";
 
 interface OnlineRechargeFormProps {
   formState: {
@@ -226,7 +227,7 @@ export const OnlineRechargeForm: FunctionalComponent<
     <>
       <div style={{ marginBottom: 18 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 充值币种
+          <span style={{ color: "#F53F3F" }}>*</span> {t("充值币种")}
         </div>
         <select
           style={{
@@ -243,7 +244,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           }}
         >
           <option value="" disabled hidden>
-            请选择充值币种
+            {t("请选择充值币种")}
           </option>
           {currencyDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
@@ -252,11 +253,11 @@ export const OnlineRechargeForm: FunctionalComponent<
       </div>
       <div style={{ marginBottom: 18 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 充值金额
+          <span style={{ color: "#F53F3F" }}>*</span> {t("充值金额")}
         </div>
         <input
           type="text"
-          placeholder="请输入充值金额"
+          placeholder={t("请输入充值金额")}
           value={formState.amount}
           onInput={(e) => {
             const value = (e.target as HTMLInputElement).value;
@@ -277,7 +278,7 @@ export const OnlineRechargeForm: FunctionalComponent<
       </div>
       <div style={{ marginBottom: 24 }}>
         <div style={theme.label}>
-          <span style={{ color: "#F53F3F" }}>*</span> 支付平台
+          <span style={{ color: "#F53F3F" }}>*</span> {t("支付平台")}
         </div>
         <select
           style={{
@@ -295,7 +296,7 @@ export const OnlineRechargeForm: FunctionalComponent<
           }}
         >
           <option value="" disabled hidden>
-            请选择支付平台
+            {t("请选择支付平台")}
           </option>
           {channelDict?.map((item: any) => (
             <option value={item.value}>{item.label}</option>
@@ -312,10 +313,10 @@ export const OnlineRechargeForm: FunctionalComponent<
       )}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
         <button type="button" onClick={onClose} style={buttonCancelStyle}>
-          取消
+          {t("取消")}
         </button>
         <button type="submit" disabled={loading} style={buttonSubmitStyle}>
-          {loading ? "提交中..." : "去支付"}
+          {loading ? t("提交中...") : t("去支付")}
         </button>
       </div>
     </>

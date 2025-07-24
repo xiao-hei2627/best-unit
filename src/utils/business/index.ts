@@ -4,8 +4,9 @@ export function initFundUnit(params: {
   biz_type: string;
   user_id: string;
   theme?: string;
+  locale?: "zh" | "en";
 }) {
-  const { merchant_id, biz_type, theme, user_id } = params;
+  const { merchant_id, biz_type, theme, user_id, locale = "zh" } = params;
   const token = "Bearer " + params.token;
   sessionStorage.setItem(
     "fund_unit_params",
@@ -15,6 +16,7 @@ export function initFundUnit(params: {
       userId: user_id,
       token,
       theme,
+      locale,
     })
   );
   return {
@@ -23,5 +25,6 @@ export function initFundUnit(params: {
     bizType: biz_type,
     theme,
     userId: user_id,
+    locale,
   };
 }
