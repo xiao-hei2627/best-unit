@@ -1,5 +1,6 @@
 import type { FunctionalComponent } from "preact";
 import { t } from "../../../../local";
+import { Theme } from "../../../../types";
 
 interface OnlineRechargeFormProps {
   formState: {
@@ -15,16 +16,19 @@ interface OnlineRechargeFormProps {
   setFormState: (fn: (state: any) => any) => void;
   onClose: () => void;
   loading: boolean;
-  whiteTheme?: boolean;
 }
 
 export const OnlineRechargeForm: FunctionalComponent<
   OnlineRechargeFormProps
-> = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
+> = ({ formState, setFormState, onClose, loading }) => {
   const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
   const currencyDict = allDicts?.currency || [];
   const channelDict =
     allDicts?.channel?.filter((item: any) => item.payment_support) || [];
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
 
   const theme = whiteTheme
     ? {

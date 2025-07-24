@@ -4,52 +4,92 @@ import { BestUnit } from "../components/business/recharge-sdk";
 import { initFundUnit } from "../main";
 import StatisticalBalance from "../components/business/statistical-balance";
 import { t } from "../local";
+import { Locale, Theme } from "../types";
 
 export default function DemoApp() {
-  const [currentLocale, setCurrentLocale] = useState<"zh" | "en">("zh");
+  const [currentLocale, setCurrentLocale] = useState<Locale>(Locale.ZH);
+  const [currentTheme, setCurrentTheme] = useState<Theme>(Theme.WHITE);
 
-  const initApp = (locale: "zh" | "en") => {
+  const initApp = ({ locale, theme }: { locale?: Locale; theme?: Theme }) => {
     initFundUnit({
       token:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM0MTM1MjksIm1lcmNoYW50X2lkIjoxMTI4LCJ0aW1lc3RhbXAiOjE3NTMxNTQzMjl9.UAvzq0P4HCnbJR1Ga3CgF6q3vk2RHiZRvnAFohBTHpw",
       merchant_id: "1128",
       biz_type: "ad",
-      locale: locale,
+      locale: locale as Locale,
+      theme: theme ?? Theme.WHITE,
     });
   };
 
   // 初始化应用
-  initApp(currentLocale);
+  initApp({ locale: currentLocale, theme: currentTheme });
 
-  const handleLocaleChange = (locale: "zh" | "en") => {
+  const handleLocaleChange = (locale: Locale) => {
     setCurrentLocale(locale);
     // 重新初始化以更新语言设置
-    initApp(locale);
+    initApp({ locale, theme: currentTheme });
   };
 
+  const handleThemeChange = (theme: Theme) => {
+    setCurrentTheme(theme);
+    initApp({ locale: currentLocale, theme });
+  };
+
+  const isDark = currentTheme === Theme.DARK;
+
   return (
-    <div>
-      <h2>组件库可视化测试</h2>
+    <div
+      style={{
+        background: isDark ? "#181A20" : "#fff",
+        minHeight: "100vh",
+        transition: "background 0.3s",
+        color: isDark ? "#F5F6FA" : "#111827",
+      }}
+    >
+      <h2
+        style={{
+          color: isDark ? "#F5F6FA" : undefined,
+          background: isDark ? "#23262F" : undefined,
+          padding: isDark ? 8 : undefined,
+          borderRadius: isDark ? 8 : undefined,
+        }}
+      >
+        组件库可视化测试
+      </h2>
 
       {/* 国际化切换区域 */}
       <div
         style={{
           marginBottom: 20,
           padding: 16,
-          border: "1px solid #e5e7eb",
+          border: isDark ? "1px solid #23262F" : "1px solid #e5e7eb",
           borderRadius: 8,
-          backgroundColor: "#f9fafb",
+          backgroundColor: isDark ? "#23262F" : "#f9fafb",
         }}
       >
-        <h3 style={{ marginTop: 0, marginBottom: 12 }}>国际化测试：</h3>
+        <h3
+          style={{
+            marginTop: 0,
+            marginBottom: 12,
+            color: isDark ? "#F5F6FA" : undefined,
+          }}
+        >
+          国际化测试：
+        </h3>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <span>当前语言：</span>
           <button
-            onClick={() => handleLocaleChange("zh")}
+            onClick={() => handleLocaleChange("zh" as Locale)}
             style={{
               padding: "8px 16px",
-              backgroundColor: currentLocale === "zh" ? "#155EEF" : "#fff",
-              color: currentLocale === "zh" ? "#fff" : "#333",
+              backgroundColor:
+                currentLocale === "zh"
+                  ? "#155EEF"
+                  : isDark
+                  ? "#23262F"
+                  : "#fff",
+              color:
+                currentLocale === "zh" ? "#fff" : isDark ? "#F5F6FA" : "#333",
               border: "1px solid #155EEF",
               borderRadius: 6,
               cursor: "pointer",
@@ -59,11 +99,17 @@ export default function DemoApp() {
             中文
           </button>
           <button
-            onClick={() => handleLocaleChange("en")}
+            onClick={() => handleLocaleChange("en" as Locale)}
             style={{
               padding: "8px 16px",
-              backgroundColor: currentLocale === "en" ? "#155EEF" : "#fff",
-              color: currentLocale === "en" ? "#fff" : "#333",
+              backgroundColor:
+                currentLocale === "en"
+                  ? "#155EEF"
+                  : isDark
+                  ? "#23262F"
+                  : "#fff",
+              color:
+                currentLocale === "en" ? "#fff" : isDark ? "#F5F6FA" : "#333",
               border: "1px solid #155EEF",
               borderRadius: 6,
               cursor: "pointer",
@@ -72,7 +118,13 @@ export default function DemoApp() {
           >
             English
           </button>
-          <span style={{ marginLeft: 12, fontSize: 14, color: "#666" }}>
+          <span
+            style={{
+              marginLeft: 12,
+              fontSize: 14,
+              color: isDark ? "#B5B8BE" : "#666",
+            }}
+          >
             {currentLocale === "zh"
               ? "当前显示中文"
               : "Currently showing English"}
@@ -81,23 +133,95 @@ export default function DemoApp() {
       </div>
 
       <div>
-        <h3>BestUnit 组件演示：</h3>
-        <BestUnit
-          theme={{ primaryColor: "#6366f1" }}
-          merchant_id="1128"
-          biz_type="ad"
-          token="123"
-        />
+        <h3 style={{ color: isDark ? "#F5F6FA" : undefined }}>
+          BestUnit 主题切换：
+        </h3>
+        <button
+          onClick={() => handleThemeChange(Theme.WHITE)}
+          style={{
+            padding: "8px 16px",
+            backgroundColor:
+              currentTheme === Theme.WHITE
+                ? "#155EEF"
+                : isDark
+                ? "#23262F"
+                : "#fff",
+            color:
+              currentTheme === Theme.WHITE
+                ? "#fff"
+                : isDark
+                ? "#F5F6FA"
+                : "#333",
+            border: "1px solid #155EEF",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontWeight: currentTheme === Theme.WHITE ? "bold" : "normal",
+            marginRight: 8,
+          }}
+        >
+          白色主题
+        </button>
+        <button
+          onClick={() => handleThemeChange(Theme.DARK)}
+          style={{
+            padding: "8px 16px",
+            backgroundColor:
+              currentTheme === Theme.DARK
+                ? "#155EEF"
+                : isDark
+                ? "#23262F"
+                : "#fff",
+            color:
+              currentTheme === Theme.DARK
+                ? "#fff"
+                : isDark
+                ? "#F5F6FA"
+                : "#333",
+            border: "1px solid #155EEF",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontWeight: currentTheme === Theme.DARK ? "bold" : "normal",
+          }}
+        >
+          暗黑主题
+        </button>
       </div>
+
       <div>
-        <h3>方法演示：</h3>
-        <button onClick={npmTest} style={{ marginRight: 10 }}>
+        <h3 style={{ color: isDark ? "#F5F6FA" : undefined }}>
+          BestUnit 组件演示：
+        </h3>
+        <BestUnit />
+      </div>
+
+      <div>
+        <h3 style={{ color: isDark ? "#F5F6FA" : undefined }}>方法演示：</h3>
+        <button
+          onClick={npmTest}
+          style={{
+            marginRight: 10,
+            background: isDark ? "#23262F" : undefined,
+            color: isDark ? "#F5F6FA" : undefined,
+            border: isDark ? "1px solid #444C5C" : undefined,
+          }}
+        >
           调用 npmTest()
         </button>
-        <button onClick={printCurrentTime}>调用 printCurrentTime()</button>
+        <button
+          onClick={printCurrentTime}
+          style={{
+            background: isDark ? "#23262F" : undefined,
+            color: isDark ? "#F5F6FA" : undefined,
+            border: isDark ? "1px solid #444C5C" : undefined,
+          }}
+        >
+          调用 printCurrentTime()
+        </button>
       </div>
       <div style={{ textAlign: "center" }}>
-        <h3>余额卡片组件演示：</h3>
+        <h3 style={{ color: isDark ? "#F5F6FA" : undefined }}>
+          余额卡片组件演示：
+        </h3>
         <StatisticalBalance />
       </div>
 
@@ -106,12 +230,20 @@ export default function DemoApp() {
         style={{
           marginTop: 20,
           padding: 16,
-          border: "1px solid #e5e7eb",
+          border: isDark ? "1px solid #23262F" : "1px solid #e5e7eb",
           borderRadius: 8,
-          backgroundColor: "#f9fafb",
+          backgroundColor: isDark ? "#23262F" : "#f9fafb",
         }}
       >
-        <h3 style={{ marginTop: 0, marginBottom: 12 }}>国际化文本测试：</h3>
+        <h3
+          style={{
+            marginTop: 0,
+            marginBottom: 12,
+            color: isDark ? "#F5F6FA" : undefined,
+          }}
+        >
+          国际化文本测试：
+        </h3>
         <div
           style={{
             display: "grid",
@@ -119,7 +251,14 @@ export default function DemoApp() {
             gap: 12,
           }}
         >
-          <div style={{ padding: 8, backgroundColor: "#fff", borderRadius: 4 }}>
+          <div
+            style={{
+              padding: 8,
+              backgroundColor: isDark ? "#181A20" : "#fff",
+              borderRadius: 4,
+              color: isDark ? "#F5F6FA" : undefined,
+            }}
+          >
             <strong>余额相关：</strong>
             <br />
             {t("余额详情")}
@@ -130,7 +269,14 @@ export default function DemoApp() {
             <br />
             {t("总可用")}
           </div>
-          <div style={{ padding: 8, backgroundColor: "#fff", borderRadius: 4 }}>
+          <div
+            style={{
+              padding: 8,
+              backgroundColor: isDark ? "#181A20" : "#fff",
+              borderRadius: 4,
+              color: isDark ? "#F5F6FA" : undefined,
+            }}
+          >
             <strong>充值相关：</strong>
             <br />
             {t("充值 / 转账")}
@@ -141,7 +287,14 @@ export default function DemoApp() {
             <br />
             {t("去支付")}
           </div>
-          <div style={{ padding: 8, backgroundColor: "#fff", borderRadius: 4 }}>
+          <div
+            style={{
+              padding: 8,
+              backgroundColor: isDark ? "#181A20" : "#fff",
+              borderRadius: 4,
+              color: isDark ? "#F5F6FA" : undefined,
+            }}
+          >
             <strong>按钮文本：</strong>
             <br />
             {t("充值/转账")}

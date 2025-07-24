@@ -2,6 +2,7 @@ import { useState, useEffect } from "preact/hooks";
 import { OnlineRechargeForm } from "./OnlineRechargeForm";
 import { OfflineTransferForm } from "./OfflineTransferForm";
 import { t } from "../../../../local";
+import { Theme } from "../../../../types";
 
 interface ModalFormProps {
   visible: boolean;
@@ -17,13 +18,7 @@ interface ModalFormProps {
   token?: string;
 }
 
-export function Recharge({
-  visible,
-  onClose,
-  onSubmit,
-  color,
-  whiteTheme = true,
-}: ModalFormProps & { whiteTheme?: boolean }) {
+export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
   const [formState, setFormState] = useState({
     amount: "",
     rechargeChannel: "",
@@ -114,6 +109,11 @@ export function Recharge({
       onClose();
     }
   };
+
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
 
   const theme = whiteTheme
     ? {
@@ -221,7 +221,7 @@ export function Recharge({
           borderRadius: 12,
           minWidth: 400,
           maxWidth: 400,
-          color: color || theme.modalColor,
+          color: theme.modalColor,
           boxShadow: theme.modalBoxShadow,
           position: "relative",
         }}
@@ -261,7 +261,6 @@ export function Recharge({
             setFormState={setFormState}
             onClose={onClose}
             loading={formState.loading}
-            whiteTheme={whiteTheme}
           />
         ) : (
           <OfflineTransferForm
@@ -269,7 +268,6 @@ export function Recharge({
             setFormState={setOfflineFormState}
             onClose={onClose}
             loading={offlineFormState.loading}
-            whiteTheme={whiteTheme}
           />
         )}
       </form>

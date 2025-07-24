@@ -7,15 +7,15 @@ export declare function initFundUnit(params: {
   merchant_id?: string;
   biz_type?: string;
   fund_balance_id?: string;
-  theme?: string;
-  locale?: "zh" | "en";
+  theme?: Theme;
+  locale?: Locale;
 }): {
   token: string;
   merchantId?: string;
   bizType?: string;
   fundBalanceId?: string;
-  theme?: string;
-  locale: "zh" | "en";
+  theme?: Theme;
+  locale: Locale;
 };
 
 // Vite 代理配置类型

@@ -1,17 +1,21 @@
+import { getAllDicts } from "../../api";
+import { Locale, Theme } from "../../types";
+
 export function initFundUnit(params: {
   token: string;
   merchant_id?: string;
   biz_type?: string;
   fund_balance_id?: string;
-  theme?: string;
-  locale?: "zh" | "en";
+  theme?: Theme;
+  locale?: Locale;
 }) {
+  getAllDicts();
   const {
     merchant_id,
     biz_type,
     fund_balance_id,
-    theme,
-    locale = "zh",
+    theme = Theme.WHITE,
+    locale = Locale.ZH,
   } = params;
   const token = "Bearer " + params.token;
   sessionStorage.setItem(

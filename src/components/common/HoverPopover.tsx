@@ -1,5 +1,6 @@
 import { useState, useRef } from "preact/hooks";
 import type { FunctionalComponent, JSX } from "preact";
+import { Theme } from "../../types";
 
 export type PopoverPosition = "top" | "bottom" | "leftTop" | "rightTop";
 interface HoverPopoverProps {
@@ -65,22 +66,56 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
     }, 120);
   };
 
+  const popoverTheme = {
+    white: {
+      popover: {
+        background: "#fff",
+        color: "#222",
+        boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+        border: "none",
+      },
+      arrow: {
+        top: "#fff",
+        bottom: "#fff",
+        left: "#fff",
+        right: "#fff",
+      },
+    },
+    dark: {
+      popover: {
+        background: "#23262F",
+        color: "#fff",
+        boxShadow: "0 4px 16px rgba(0,0,0,0.32)",
+        border: "1px solid #444C5C",
+      },
+      arrow: {
+        top: "#23262F",
+        bottom: "#23262F",
+        left: "#23262F",
+        right: "#23262F",
+      },
+    },
+  };
+
   // 弹层定位样式
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
+  const theme = popoverTheme[whiteTheme ? "white" : "dark"];
+
   let popoverStyle: any = {
     position: "absolute",
     zIndex: 999,
-    background: "#fff",
-    color: "#222",
     borderRadius: 6,
     fontSize: 15,
     minWidth: popoverMinWidth,
     width: popoverWidth,
     padding: "8px 14px",
-    boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
     pointerEvents: "auto",
     textAlign: "center",
-    border: "none",
     animation: "fadeInUp 0.3s",
+    ...theme.popover,
   };
   let arrowStyle: any = {
     position: "absolute",
@@ -102,7 +137,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       transform: "translateX(-50%)",
       borderLeft: "8px solid transparent",
       borderRight: "8px solid transparent",
-      borderTop: "8px solid #fff",
+      borderTop: `8px solid ${theme.arrow.top}`,
     };
   } else if (position === "bottom") {
     popoverStyle = {
@@ -119,7 +154,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       transform: "translateX(-50%)",
       borderLeft: "8px solid transparent",
       borderRight: "8px solid transparent",
-      borderBottom: "8px solid #fff",
+      borderBottom: `8px solid ${theme.arrow.bottom}`,
     };
   } else if (position === "leftTop") {
     popoverStyle = {
@@ -135,7 +170,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       top: 12,
       borderTop: "8px solid transparent",
       borderBottom: "8px solid transparent",
-      borderLeft: "8px solid #fff",
+      borderLeft: `8px solid ${theme.arrow.left}`,
     };
   } else if (position === "rightTop") {
     popoverStyle = {
@@ -151,7 +186,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       top: 12,
       borderTop: "8px solid transparent",
       borderBottom: "8px solid transparent",
-      borderRight: "8px solid #fff",
+      borderRight: `8px solid ${theme.arrow.right}`,
     };
   }
 

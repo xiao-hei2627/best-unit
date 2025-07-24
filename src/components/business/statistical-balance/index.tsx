@@ -3,6 +3,7 @@ import HoverPopover, { type PopoverPosition } from "../../common/HoverPopover";
 import { getBalance } from "../../../api";
 import { t } from "../../../local";
 import register from "preact-custom-element";
+import { Theme } from "../../../types";
 
 function formatNumber(num: number) {
   return num.toLocaleString("en-US", {
@@ -10,6 +11,105 @@ function formatNumber(num: number) {
     maximumFractionDigits: 2,
   });
 }
+
+const balanceTheme = {
+  white: {
+    popoverTitle: {
+      fontSize: 16,
+      fontWeight: 600,
+      color: "#222",
+      marginBottom: 16,
+      textAlign: "center",
+    },
+    detailRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "8px 0",
+      borderBottom: "1px solid #e5e7eb",
+      fontSize: 15,
+    },
+    detailLabel: {
+      display: "flex",
+      alignItems: "center",
+      color: "#6b7280",
+      fontWeight: 500,
+    },
+    detailDot: (color: string) => ({
+      display: "inline-block",
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: color,
+      marginRight: 8,
+    }),
+    detailValue: (color: string) => ({
+      color,
+      fontWeight: 600,
+      fontSize: 15,
+    }),
+    main: {
+      fontSize: 24,
+      fontWeight: 800,
+      color: "#111827",
+      display: "inline-block",
+    },
+    currency: {
+      fontSize: 18,
+      color: "#6b7280",
+      marginLeft: 8,
+      fontWeight: 600,
+    },
+  },
+  dark: {
+    popoverTitle: {
+      fontSize: 16,
+      fontWeight: 600,
+      color: "#fff",
+      marginBottom: 16,
+      textAlign: "center",
+    },
+    detailRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "8px 0",
+      borderBottom: "1px solid #23262F",
+      fontSize: 15,
+    },
+    detailLabel: {
+      display: "flex",
+      alignItems: "center",
+      color: "#B5B8BE",
+      fontWeight: 500,
+    },
+    detailDot: (color: string) => ({
+      display: "inline-block",
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: color,
+      marginRight: 8,
+    }),
+    detailValue: (color: string) => ({
+      color,
+      fontWeight: 600,
+      fontSize: 15,
+    }),
+    main: {
+      fontSize: 24,
+      fontWeight: 800,
+      color: "#fff",
+      display: "inline-block",
+    },
+    currency: {
+      fontSize: 18,
+      color: "#B5B8BE",
+      marginLeft: 8,
+      fontWeight: 600,
+    },
+  },
+};
 
 function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
   const [balanceData, setBalanceData] = useState({
@@ -65,56 +165,24 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
     fetchBalance();
   }, []);
 
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
+  const theme = balanceTheme[whiteTheme ? "white" : "dark"];
+
   return (
     <HoverPopover
       popover={
         <>
-          <div
-            style={{
-              fontSize: 16,
-              fontWeight: 600,
-              color: "#222",
-              marginBottom: 16,
-              textAlign: "center",
-            }}
-          >
-            {t("余额详情")}
-          </div>
+          <div style={theme.popoverTitle}>{t("余额详情")}</div>
           {balanceData.details.map((item) => (
-            <div
-              key={item.label}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "8px 0",
-                borderBottom: "1px solid #e5e7eb",
-                fontSize: 15,
-              }}
-            >
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "#6b7280",
-                  fontWeight: 500,
-                }}
-              >
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: item.dot,
-                    marginRight: 8,
-                  }}
-                />
+            <div key={item.label} style={theme.detailRow}>
+              <span style={theme.detailLabel}>
+                <span style={theme.detailDot(item.dot)} />
                 {item.label}
               </span>
-              <span
-                style={{ color: item.color, fontWeight: 600, fontSize: 15 }}
-              >
+              <span style={theme.detailValue(item.color)}>
                 {balanceData.symbol}
                 {formatNumber(item.value)}
               </span>
@@ -124,26 +192,10 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
       }
       popoverPosition={props.popoverPosition || "bottom"}
     >
-      <div
-        style={{
-          fontSize: 24,
-          fontWeight: 800,
-          color: "#111827",
-          display: "inline-block",
-        }}
-      >
+      <div style={theme.main}>
         {balanceData.symbol}
         {formatNumber(balanceData.available)}
-        <span
-          style={{
-            fontSize: 18,
-            color: "#6b7280",
-            marginLeft: 8,
-            fontWeight: 600,
-          }}
-        >
-          {balanceData.currency}
-        </span>
+        <span style={theme.currency}>{balanceData.currency}</span>
       </div>
     </HoverPopover>
   );

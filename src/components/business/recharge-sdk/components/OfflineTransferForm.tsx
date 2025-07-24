@@ -3,6 +3,7 @@ import { Upload } from "../../../common/Upload";
 import { createOfflineRecharge } from "../../../../api";
 import { message } from "../../../common/Message";
 import { t } from "../../../../local";
+import { Theme } from "../../../../types";
 
 interface OfflineTransferFormProps {
   formState: {
@@ -17,16 +18,18 @@ interface OfflineTransferFormProps {
   setFormState: (fn: (state: any) => any) => void;
   onClose: () => void;
   loading: boolean;
-  whiteTheme?: boolean;
 }
 
 export const OfflineTransferForm: FunctionalComponent<
   OfflineTransferFormProps
-> = ({ formState, setFormState, onClose, loading, whiteTheme = false }) => {
+> = ({ formState, setFormState, onClose, loading }) => {
   const allDicts = JSON.parse(sessionStorage.getItem("all_dicts") || "{}");
   console.log(allDicts, "allDicts");
   const channelDict = allDicts?.channel || [];
-
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
   // 样式对象
   const theme = whiteTheme
     ? {
