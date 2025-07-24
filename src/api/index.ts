@@ -10,6 +10,7 @@ export function getBalance() {
       params: {
         merchant_id: fundUnitParams.merchantId,
         biz_type: fundUnitParams.bizType,
+        fund_balance_id: fundUnitParams.fundBalanceId,
       },
     })
     .then((res) => {

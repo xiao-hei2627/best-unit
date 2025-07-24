@@ -96,7 +96,7 @@ export default function DemoApp() {
         </button>
         <button onClick={printCurrentTime}>调用 printCurrentTime()</button>
       </div>
-      <div>
+      <div style={{ textAlign: "center" }}>
         <h3>余额卡片组件演示：</h3>
         <StatisticalBalance />
       </div>

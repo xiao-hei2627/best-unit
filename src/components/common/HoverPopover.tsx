@@ -29,8 +29,13 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
     "top" | "bottom" | "leftTop" | "rightTop"
   >(popoverPosition);
   const ref = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<number | null>(null);
 
   const handleMouseEnter = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
     if (popoverPosition === "top" || popoverPosition === "bottom") {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
@@ -51,6 +56,13 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       setPosition(popoverPosition);
     }
     setShow(true);
+  };
+
+  const handleMouseLeave = () => {
+    // 延迟关闭，防止鼠标快速移动到弹窗内容时闪烁
+    timerRef.current = window.setTimeout(() => {
+      setShow(false);
+    }, 120);
   };
 
   // 弹层定位样式
@@ -148,11 +160,15 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
       ref={ref}
       style={{ position: "relative", display: "inline-block" }}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={() => setShow(false)}
+      onMouseLeave={handleMouseLeave}
     >
       {children}
       {show && (
-        <div style={popoverStyle}>
+        <div
+          style={popoverStyle}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {popover}
           <div style={arrowStyle} />
         </div>
