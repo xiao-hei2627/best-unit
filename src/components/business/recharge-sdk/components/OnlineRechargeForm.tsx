@@ -1,6 +1,7 @@
 import type { FunctionalComponent } from "preact";
 import { t } from "../../../../local";
 import { Theme } from "../../../../types";
+import { Select } from "../../../common/Select";
 
 interface OnlineRechargeFormProps {
   formState: {
@@ -54,16 +55,6 @@ export const OnlineRechargeForm: FunctionalComponent<
         inputError: {
           border: "1px solid #ff4d4f",
         },
-        select: {
-          width: "100%",
-          padding: "10px 12px",
-          borderRadius: 6,
-          border: "1px solid #E5E6EB",
-          background: "#fff",
-          color: "#222",
-          fontSize: 15,
-          outline: "none",
-        },
         selectError: {
           border: "1px solid #ff4d4f",
         },
@@ -115,16 +106,6 @@ export const OnlineRechargeForm: FunctionalComponent<
         },
         inputError: {
           border: "1px solid #ff4d4f",
-        },
-        select: {
-          width: "100%",
-          padding: "10px 12px",
-          borderRadius: 6,
-          border: "1px solid #23262F",
-          background: "#23262F",
-          color: "#fff",
-          fontSize: 15,
-          outline: "none",
         },
         selectError: {
           border: "1px solid #ff4d4f",
@@ -233,27 +214,20 @@ export const OnlineRechargeForm: FunctionalComponent<
         <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> {t("充值币种")}
         </div>
-        <select
-          style={{
-            ...theme.select,
-            // 币种没有错误校验
-          }}
+        <Select
           value={formState.currency}
-          onInput={(e) => {
-            const value = (e.target as HTMLSelectElement).value;
+          onChange={(value) => {
             setFormState((state: any) => ({
               ...state,
               currency: value,
             }));
           }}
-        >
-          <option value="" disabled hidden>
-            {t("请选择充值币种")}
-          </option>
-          {currencyDict?.map((item: any) => (
-            <option value={item.value}>{item.label}</option>
-          ))}
-        </select>
+          options={currencyDict?.map((item: any) => ({
+            value: item.value,
+            label: item.label,
+          }))}
+          placeholder={t("请选择充值币种")}
+        />
       </div>
       <div style={{ marginBottom: 18 }}>
         <div style={theme.label}>
@@ -284,28 +258,21 @@ export const OnlineRechargeForm: FunctionalComponent<
         <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> {t("支付平台")}
         </div>
-        <select
-          style={{
-            ...theme.select,
-            ...(formState.rechargeChannelError ? theme.selectError : {}),
-          }}
+        <Select
           value={formState.rechargeChannel}
-          onInput={(e) => {
-            const value = (e.target as HTMLSelectElement).value;
+          onChange={(value) => {
             setFormState((state: any) => ({
               ...state,
               rechargeChannel: value,
               rechargeChannelError: value ? "" : state.rechargeChannelError,
             }));
           }}
-        >
-          <option value="" disabled hidden>
-            {t("请选择支付平台")}
-          </option>
-          {channelDict?.map((item: any) => (
-            <option value={item.value}>{item.label}</option>
-          ))}
-        </select>
+          options={channelDict?.map((item: any) => ({
+            value: item.value,
+            label: item.label,
+          }))}
+          placeholder={t("请选择支付平台")}
+        ></Select>
         {formState.rechargeChannelError && (
           <div style={theme.error}>{formState.rechargeChannelError}</div>
         )}

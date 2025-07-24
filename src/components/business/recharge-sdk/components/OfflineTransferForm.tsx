@@ -4,6 +4,7 @@ import { createOfflineRecharge } from "../../../../api";
 import { message } from "../../../common/Message";
 import { t } from "../../../../local";
 import { Theme } from "../../../../types";
+import { Select } from "../../../common/Select";
 
 interface OfflineTransferFormProps {
   formState: {
@@ -281,28 +282,23 @@ export const OfflineTransferForm: FunctionalComponent<
         <div style={theme.label}>
           <span style={{ color: "#F53F3F" }}>*</span> {t("第三方支付平台")}
         </div>
-        <select
-          style={{
-            ...theme.select,
-            ...(formState.platformError ? theme.selectError : {}),
-          }}
+        <Select
           value={formState.platform}
-          onInput={(e) => {
-            const value = (e.target as HTMLSelectElement).value;
+          onChange={(value) => {
             setFormState((state: any) => ({
               ...state,
               platform: value,
               platformError: value ? "" : state.platformError,
             }));
           }}
-        >
-          <option value="" disabled hidden>
-            {t("请选择支付平台")}
-          </option>
-          {channelDict?.map((item: any) => (
-            <option value={item.value}>{item.label}</option>
-          ))}
-        </select>
+          options={[
+            ...channelDict?.map((item: any) => ({
+              value: item.value,
+              label: item.label,
+            })),
+          ]}
+          placeholder={t("请选择支付平台")}
+        />
         {formState.platformError && (
           <div style={theme.error}>{formState.platformError}</div>
         )}
