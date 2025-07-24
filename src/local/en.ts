@@ -6,6 +6,7 @@ export const en: Record<string, string> = {
   冻结金额: "Frozen Amount",
   总可用: "Total Available",
   暂无数据: "No Data",
+  "金额需在1到999999.99之间": "Amount must be between 1 and 999999.99",
 
   // 充值相关
   "充值 / 转账": "Recharge / Transfer",
@@ -17,6 +18,8 @@ export const en: Record<string, string> = {
   请选择充值币种: "Please select recharge currency",
   请输入充值金额: "Please enter recharge amount",
   请选择支付平台: "Please select payment platform",
+  "需要收取手续费，实际支付金额约为：":
+    "requires a handling fee, the actual payment amount is approximately: ",
   "提交失败，请重试": "Submit failed, please try again",
   "提交中...": "Submitting...",
   去支付: "Go to Pay",

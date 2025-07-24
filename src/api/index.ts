@@ -94,5 +94,23 @@ export const createOnlineRecharge = async (data: any) => {
   });
 };
 
+interface CalcPaymentAmountParams {
+  channel: string; // 支付平台，如 "stripe"
+  amount: string; // 充值金额，如 "10"
+  currency: string; // 币种，如 "USD"
+}
+
+// 计算支付金额
+export const calcPaymentAmount = async (data: CalcPaymentAmountParams) => {
+  return http
+    .get("/calc-payment-amount", {
+      params: data,
+    })
+    .then((res) => {
+      const data = res.data;
+      return data.payment_amount;
+    });
+};
+
 // 示例用法：
 // getBalance({ merchant_id: '1128', biz_type: 'ad', token: 'xxx' }).then(res => console.log(res));

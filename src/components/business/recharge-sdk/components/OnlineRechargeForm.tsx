@@ -1,7 +1,9 @@
 import type { FunctionalComponent } from "preact";
+import { useState, useEffect } from "preact/hooks";
 import { t } from "../../../../local";
 import { Theme } from "../../../../types";
 import { Select } from "../../../common/Select";
+import { calcPaymentAmount } from "../../../../api";
 
 interface OnlineRechargeFormProps {
   formState: {
@@ -30,6 +32,29 @@ export const OnlineRechargeForm: FunctionalComponent<
     sessionStorage.getItem("fund_unit_params") || "{}"
   );
   const whiteTheme = fundUnitParams.theme === Theme.WHITE;
+  const [actualAmount, setActualAmount] = useState<string>("");
+  const [showFeeTip, setShowFeeTip] = useState(false);
+
+  // 当三个参数都填写完整时，计算实际支付金额
+  useEffect(() => {
+    if (formState.currency && formState.amount && formState.rechargeChannel) {
+      calcPaymentAmount({
+        channel: formState.rechargeChannel,
+        amount: formState.amount,
+        currency: formState.currency,
+      })
+        .then((paymentAmount) => {
+          setActualAmount(paymentAmount);
+          setShowFeeTip(true);
+        })
+        .catch((error) => {
+          console.error("计算支付金额失败:", error);
+          setShowFeeTip(false);
+        });
+    } else {
+      setShowFeeTip(false);
+    }
+  }, [formState.currency, formState.amount, formState.rechargeChannel]);
 
   const theme = whiteTheme
     ? {
@@ -277,6 +302,25 @@ export const OnlineRechargeForm: FunctionalComponent<
           <div style={theme.error}>{formState.rechargeChannelError}</div>
         )}
       </div>
+      {/* 手续费提示 */}
+      {showFeeTip && actualAmount && (
+        <div
+          style={{
+            marginBottom: 24,
+            padding: "12px 16px",
+            background: whiteTheme ? "#f6ffed" : "#1a1a1a",
+            border: `1px solid ${whiteTheme ? "#b7eb8f" : "#333"}`,
+            borderRadius: 6,
+            fontSize: 14,
+            color: whiteTheme ? "#52c41a" : "#52c41a",
+          }}
+        >
+          {channelDict.find(
+            (item: any) => item.value === formState.rechargeChannel
+          )?.label || formState.rechargeChannel}
+          {t("需要收取手续费，实际支付金额约为：")}${actualAmount}
+        </div>
+      )}
       {formState.error && (
         <div style={{ color: "#ff4d4f", marginBottom: 12 }}>
           {formState.error}

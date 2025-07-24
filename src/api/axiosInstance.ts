@@ -5,16 +5,16 @@ import type {
   InternalAxiosRequestConfig,
 } from "axios";
 import { message } from "../components/common/Message";
+import { Locale } from "../types";
 
 export interface CreateAxiosOptions {
   baseURL?: string;
   timeout?: number;
-  getLocale?: () => string | null;
   onError?: (msg: string, error: any) => void;
 }
 
 export function createAxiosInstance(options: CreateAxiosOptions = {}) {
-  const { baseURL = "/api", timeout = 10000, getLocale, onError } = options;
+  const { baseURL = "/api", timeout = 10000, onError } = options;
 
   const instance: AxiosInstance = axios.create({ baseURL, timeout });
 
@@ -23,17 +23,13 @@ export function createAxiosInstance(options: CreateAxiosOptions = {}) {
     const fundUnitParams = JSON.parse(
       sessionStorage.getItem("fund_unit_params") || "{}"
     );
-    const { token } = fundUnitParams;
-    config.headers = { ...config.headers, Authorization: token } as any;
+    const { token, locale } = fundUnitParams;
+    config.headers = {
+      ...config.headers,
+      Authorization: token,
+      "x-locale": locale === Locale.ZH ? "zh-CN" : "en-US",
+    } as any;
 
-    if (getLocale) {
-      const locale = getLocale();
-      if (locale)
-        config.headers = {
-          ...config.headers,
-          "Accept-Language": locale,
-        } as any;
-    }
     return config;
   });
 
