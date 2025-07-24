@@ -1,6 +1,7 @@
 import { useState, useRef } from "preact/hooks";
 import type { FunctionalComponent, JSX } from "preact";
 
+export type PopoverPosition = "top" | "bottom" | "leftTop" | "rightTop";
 interface HoverPopoverProps {
   popover: JSX.Element;
   children: JSX.Element;

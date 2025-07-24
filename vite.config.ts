@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
-import proxy from "./src/api/proxy";
+import { viteProxy } from "./src/api/proxy";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [preact()],
   server: {
-    proxy,
+    proxy: viteProxy,
   },
   build: {
     outDir: "dist", //自定义构建输出目录target:'es2020'

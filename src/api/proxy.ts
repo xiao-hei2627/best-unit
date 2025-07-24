@@ -1,5 +1,5 @@
 // Vite 配置用的代理对象
-export default {
+const viteProxy = {
   "/api": {
     target: "https://fund.bestfulfill.tech/api/sdk",
     changeOrigin: true,
@@ -7,3 +7,5 @@ export default {
     secure: false,
   },
 };
+
+export { viteProxy };

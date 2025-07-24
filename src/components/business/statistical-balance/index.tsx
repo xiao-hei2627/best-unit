@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import HoverPopover from "../../common/HoverPopover";
+import HoverPopover, { type PopoverPosition } from "../../common/HoverPopover";
 import { getBalance } from "../../../api";
 import register from "preact-custom-element";
 
@@ -22,7 +22,7 @@ function formatNumber(num: number) {
   });
 }
 
-function StatisticalBalance() {
+function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
   const [balanceData, setBalanceData] = useState(defaultBalanceData);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ function StatisticalBalance() {
           ))}
         </>
       }
-      popoverPosition="rightTop"
+      popoverPosition={props.popoverPosition || "bottom"}
     >
       <div
         style={{

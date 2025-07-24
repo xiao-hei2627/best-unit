@@ -50,6 +50,6 @@ export function BestUnit(props: any) {
   );
 }
 
-register(BestUnit, "x-best-modal-form", ["theme"], { shadow: false });
+register(BestUnit, "best-recharge", ["theme"], { shadow: false });
 
 export default BestUnit;

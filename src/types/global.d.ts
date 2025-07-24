@@ -15,6 +15,17 @@ export declare function initFundUnit(params: {
   theme?: string;
   userId: string;
 };
+
+// Vite 代理配置类型
+export declare const viteProxy: {
+  "/api": {
+    target: string;
+    changeOrigin: boolean;
+    rewrite: (path: string) => string;
+    secure: boolean;
+  };
+};
+
 declare global {
   interface Window {
     bestUnit: {
@@ -28,8 +39,7 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
-      "x-greeting": any;
-      "x-best-modal-form": {
+      "best-recharge": {
         theme?: any;
         merchant_id?: string;
         biz_type?: string;
