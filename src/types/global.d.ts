@@ -4,16 +4,17 @@ export declare function printCurrentTime(): void;
 
 export declare function initFundUnit(params: {
   token: string;
-  merchant_id: string;
-  biz_type: string;
+  merchant_id?: string;
+  biz_type?: string;
+  fund_balance_id?: string;
   theme?: string;
   locale?: "zh" | "en";
 }): {
   token: string;
-  merchantId: string;
-  bizType: string;
+  merchantId?: string;
+  bizType?: string;
+  fundBalanceId?: string;
   theme?: string;
-  userId: string;
   locale: "zh" | "en";
 };
 

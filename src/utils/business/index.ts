@@ -2,7 +2,7 @@ export function initFundUnit(params: {
   token: string;
   merchant_id?: string;
   biz_type?: string;
-  fund_balance_id: string;
+  fund_balance_id?: string;
   theme?: string;
   locale?: "zh" | "en";
 }) {
