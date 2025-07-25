@@ -103,11 +103,22 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
     }
   };
 
-  // 点击弹窗外部关闭
-  const handleMaskClick = (e: any) => {
+  // 记录鼠标是否在mask上按下
+  const [maskMouseDown, setMaskMouseDown] = useState(false);
+
+  // 只有mousedown和mouseup都在mask上才关闭弹窗
+  const handleMaskMouseDown = (e: any) => {
     if (e.target === e.currentTarget) {
+      setMaskMouseDown(true);
+    } else {
+      setMaskMouseDown(false);
+    }
+  };
+  const handleMaskMouseUp = (e: any) => {
+    if (e.target === e.currentTarget && maskMouseDown) {
       onClose();
     }
+    setMaskMouseDown(false);
   };
 
   const fundUnitParams = JSON.parse(
@@ -211,7 +222,8 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
         justifyContent: "center",
         zIndex: 9999,
       }}
-      onClick={handleMaskClick}
+      onMouseDown={handleMaskMouseDown}
+      onMouseUp={handleMaskMouseUp}
     >
       <form
         onSubmit={handleSubmit}
