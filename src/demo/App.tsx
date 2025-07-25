@@ -4,13 +4,22 @@ import { BestUnit } from "../components/business/recharge-sdk";
 import { initFundUnit } from "../main";
 import StatisticalBalance from "../components/business/statistical-balance";
 import { t } from "../local";
-import { Locale, Theme } from "../types";
+import { Env, Locale, Theme } from "../types";
 
 export default function DemoApp() {
   const [currentLocale, setCurrentLocale] = useState<Locale>(Locale.ZH);
   const [currentTheme, setCurrentTheme] = useState<Theme>(Theme.WHITE);
+  const [currentEnv, setCurrentEnv] = useState<Env>(Env.DEV);
 
-  const initApp = ({ locale, theme }: { locale?: Locale; theme?: Theme }) => {
+  const initApp = ({
+    locale,
+    theme,
+    env,
+  }: {
+    locale?: Locale;
+    theme?: Theme;
+    env?: Env;
+  }) => {
     // 测试代码：每次刷新页面时生成不同的 token
     const generateTestToken = () => {
       const timestamp = Date.now();
@@ -31,21 +40,28 @@ export default function DemoApp() {
       user_id: "19b8a77c-d3fc-45da-9520-4a07463123df",
       locale: locale as Locale,
       theme: theme ?? Theme.WHITE,
+      env: env ?? currentEnv,
     });
   };
 
   // 初始化应用
-  initApp({ locale: currentLocale, theme: currentTheme });
+  initApp({ locale: currentLocale, theme: currentTheme, env: currentEnv });
 
   const handleLocaleChange = (locale: Locale) => {
     setCurrentLocale(locale);
     // 重新初始化以更新语言设置
-    initApp({ locale, theme: currentTheme });
+    initApp({ locale, theme: currentTheme, env: currentEnv });
   };
 
   const handleThemeChange = (theme: Theme) => {
     setCurrentTheme(theme);
-    initApp({ locale: currentLocale, theme });
+    initApp({ locale: currentLocale, theme, env: currentEnv });
+  };
+
+  const handleEnvChange = (env: Env) => {
+    setCurrentEnv(env);
+    initApp({ locale: currentLocale, theme: currentTheme, env });
+    window.location.reload();
   };
 
   const isDark = currentTheme === Theme.DARK;
@@ -219,6 +235,73 @@ export default function DemoApp() {
         >
           暗黑主题
         </button>
+      </div>
+
+      <div>
+        <h3 style={{ color: isDark ? "#F5F6FA" : undefined }}>
+          BestUnit 环境切换：
+        </h3>
+        <button
+          onClick={() => handleEnvChange(Env.DEV)}
+          style={{
+            padding: "8px 16px",
+            backgroundColor:
+              currentEnv === "dev" ? "#52c41a" : isDark ? "#23262F" : "#fff",
+            color: currentEnv === "dev" ? "#fff" : isDark ? "#F5F6FA" : "#333",
+            border: "1px solid #52c41a",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontWeight: currentEnv === "dev" ? "bold" : "normal",
+            marginRight: 8,
+          }}
+        >
+          开发环境 (dev)
+        </button>
+        <button
+          onClick={() => handleEnvChange(Env.TEST)}
+          style={{
+            padding: "8px 16px",
+            backgroundColor:
+              currentEnv === "test" ? "#faad14" : isDark ? "#23262F" : "#fff",
+            color: currentEnv === "test" ? "#fff" : isDark ? "#F5F6FA" : "#333",
+            border: "1px solid #faad14",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontWeight: currentEnv === "test" ? "bold" : "normal",
+            marginRight: 8,
+          }}
+        >
+          测试环境 (test)
+        </button>
+        <button
+          onClick={() => handleEnvChange(Env.PROD)}
+          style={{
+            padding: "8px 16px",
+            backgroundColor:
+              currentEnv === "prod" ? "#ff4d4f" : isDark ? "#23262F" : "#fff",
+            color: currentEnv === "prod" ? "#fff" : isDark ? "#F5F6FA" : "#333",
+            border: "1px solid #ff4d4f",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontWeight: currentEnv === "prod" ? "bold" : "normal",
+          }}
+        >
+          生产环境 (prod)
+        </button>
+        <div
+          style={{
+            marginTop: 8,
+            fontSize: 14,
+            color: isDark ? "#B5B8BE" : "#666",
+          }}
+        >
+          当前环境:{" "}
+          {currentEnv === "dev"
+            ? "开发环境"
+            : currentEnv === "test"
+            ? "测试环境"
+            : "生产环境"}
+        </div>
       </div>
 
       <div>

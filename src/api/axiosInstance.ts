@@ -5,7 +5,7 @@ import type {
   InternalAxiosRequestConfig,
 } from "axios";
 import { message } from "../components/common/Message";
-import { Locale } from "../types";
+import { Env, Locale } from "../types";
 
 export interface CreateAxiosOptions {
   baseURL?: string;
@@ -14,15 +14,34 @@ export interface CreateAxiosOptions {
 }
 
 export function createAxiosInstance(options: CreateAxiosOptions = {}) {
-  const { baseURL = "/api", timeout = 10000, onError } = options;
+  // 根据 fund_unit_params 中的 env 参数选择 API URL
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+  const { env } = fundUnitParams;
+
+  let apiUrl: string;
+  switch (env) {
+    case Env.PROD:
+    case Env.PRODUCTION:
+      apiUrl = "https://fund.bestfulfill.com/api/sdk";
+      break;
+    case Env.TEST:
+      apiUrl = "https://fund.bestfulfill.tech/api/sdk";
+      break;
+    case Env.DEV:
+    case Env.DEVELOPMENT:
+    default:
+      apiUrl = "/api";
+      break;
+  }
+
+  const { baseURL = apiUrl, timeout = 10000, onError } = options;
 
   const instance: AxiosInstance = axios.create({ baseURL, timeout });
 
   // 请求拦截：加 token、国际化
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    const fundUnitParams = JSON.parse(
-      sessionStorage.getItem("fund_unit_params") || "{}"
-    );
     const { token, locale } = fundUnitParams;
     config.headers = {
       ...config.headers,

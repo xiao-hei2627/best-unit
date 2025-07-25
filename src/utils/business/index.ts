@@ -1,5 +1,5 @@
 import { getAllDicts } from "../../api";
-import { Locale, Theme } from "../../types";
+import { Locale, Theme, type Env } from "../../types";
 
 export function initFundUnit(params: {
   token: string;
@@ -9,6 +9,7 @@ export function initFundUnit(params: {
   user_id: string;
   theme?: Theme;
   locale?: Locale;
+  env: Env;
 }) {
   const {
     merchant_id,
@@ -17,6 +18,7 @@ export function initFundUnit(params: {
     user_id,
     theme = Theme.WHITE,
     locale = Locale.ZH,
+    env,
   } = params;
   const token = "Bearer " + params.token;
   sessionStorage.setItem(
@@ -29,6 +31,7 @@ export function initFundUnit(params: {
       token,
       theme,
       locale,
+      env,
     })
   );
   getAllDicts();
@@ -40,5 +43,6 @@ export function initFundUnit(params: {
     userId: user_id,
     theme,
     locale,
+    env,
   };
 }

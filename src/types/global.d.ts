@@ -10,6 +10,7 @@ export declare function initFundUnit(params: {
   user_id: string;
   theme?: Theme;
   locale?: Locale;
+  env: Env;
 }): {
   token: string;
   merchantId?: string;
@@ -17,6 +18,7 @@ export declare function initFundUnit(params: {
   fundBalanceId?: string;
   theme?: Theme;
   locale: Locale;
+  env: Env;
 };
 
 // Vite 代理配置类型
@@ -40,6 +42,7 @@ declare global {
         fund_balance_id?: string;
         locale?: "zh" | "en";
         theme?: Theme;
+        env: Env;
       }) => void;
     };
   }
