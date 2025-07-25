@@ -11,11 +11,24 @@ export default function DemoApp() {
   const [currentTheme, setCurrentTheme] = useState<Theme>(Theme.WHITE);
 
   const initApp = ({ locale, theme }: { locale?: Locale; theme?: Theme }) => {
+    // 测试代码：每次刷新页面时生成不同的 token
+    const generateTestToken = () => {
+      const timestamp = Date.now();
+      const randomId = Math.floor(Math.random() * 1000);
+      return `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM0MTM1MjksIm1lcmNoYW50X2lkIjoxMTI4LCJ0aW1lc3RhbXAiOjE3NTMxNTQzMjl9.${timestamp}_${randomId}_TEST_TOKEN`;
+    };
+
+    const testToken = generateTestToken();
+    console.log("=== 测试 Token 生成 ===");
+    console.log("当前时间戳:", Date.now());
+    console.log("生成的测试 Token:", testToken);
+    console.log("========================");
+
     initFundUnit({
       token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM0MTM1MjksIm1lcmNoYW50X2lkIjoxMTI4LCJ0aW1lc3RhbXAiOjE3NTMxNTQzMjl9.UAvzq0P4HCnbJR1Ga3CgF6q3vk2RHiZRvnAFohBTHpw",
-      merchant_id: "1128",
-      biz_type: "ad",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjaGFudF9pZCI6MTAwMiwidGltZXN0YW1wIjoxNzUzNDMwNjkyLCJleHAiOjE3NTM0MzQyOTJ9.OPYKUxLQ3C36rKiAmCnUwxTkvM9eKgtsnoxrB9Ntrag",
+      fund_balance_id: "FB1FNZ5Q55M7QP2C",
+      user_id: "19b8a77c-d3fc-45da-9520-4a07463123df",
       locale: locale as Locale,
       theme: theme ?? Theme.WHITE,
     });
@@ -54,8 +67,29 @@ export default function DemoApp() {
           borderRadius: isDark ? 8 : undefined,
         }}
       >
-        组件库可视化测试
+        组件库可视化测试 (Token 测试版本)
       </h2>
+
+      {/* Token 测试信息显示 */}
+      <div
+        style={{
+          marginBottom: 20,
+          padding: 16,
+          border: "2px solid #1890ff",
+          borderRadius: 8,
+          backgroundColor: "#e6f7ff",
+        }}
+      >
+        <h3 style={{ marginTop: 0, marginBottom: 12, color: "#1890ff" }}>
+          🧪 Token 测试信息：
+        </h3>
+        <p style={{ margin: 0, color: "#1890ff" }}>
+          每次刷新页面都会生成新的测试 Token，请查看控制台输出。
+        </p>
+        <p style={{ margin: "8px 0 0 0", color: "#1890ff", fontSize: "12px" }}>
+          当前时间戳: {Date.now()}
+        </p>
+      </div>
 
       {/* 国际化切换区域 */}
       <div

@@ -7,6 +7,7 @@ export declare function initFundUnit(params: {
   merchant_id?: string;
   biz_type?: string;
   fund_balance_id?: string;
+  user_id: string;
   theme?: Theme;
   locale?: Locale;
 }): {
@@ -35,7 +36,10 @@ declare global {
         token: string;
         merchant_id: string;
         biz_type: string;
+        user_id: string;
+        fund_balance_id?: string;
         locale?: "zh" | "en";
+        theme?: Theme;
       }) => void;
     };
   }

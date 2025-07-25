@@ -64,7 +64,10 @@ export const createOfflineRecharge = async (data: any) => {
   const params = {
     merchant_id: Number(fundUnitParams.merchantId),
     biz_type: fundUnitParams.bizType,
-    source_operator: String(fundUnitParams.userId),
+    fund_balance_id: fundUnitParams.fundBalanceId,
+    source_operator: fundUnitParams.userId
+      ? String(fundUnitParams.userId)
+      : undefined,
     transfer_no: data.transferNo,
     transfer_channel: data.transferChannel,
     voucher_urls: data.voucherUrls,
@@ -83,7 +86,10 @@ export const createOnlineRecharge = async (data: any) => {
   const params = {
     merchant_id: Number(fundUnitParams.merchantId),
     biz_type: fundUnitParams.bizType,
-    source_operator: String(fundUnitParams.userId),
+    fund_balance_id: fundUnitParams.fundBalanceId,
+    source_operator: fundUnitParams.userId
+      ? String(fundUnitParams.userId)
+      : undefined,
     amount: data.amount,
     currency: data.currency,
     recharge_channel: data.rechargeChannel,

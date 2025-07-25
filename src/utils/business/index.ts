@@ -6,14 +6,15 @@ export function initFundUnit(params: {
   merchant_id?: string;
   biz_type?: string;
   fund_balance_id?: string;
+  user_id: string;
   theme?: Theme;
   locale?: Locale;
 }) {
-  getAllDicts();
   const {
     merchant_id,
     biz_type,
     fund_balance_id,
+    user_id,
     theme = Theme.WHITE,
     locale = Locale.ZH,
   } = params;
@@ -24,16 +25,19 @@ export function initFundUnit(params: {
       merchantId: merchant_id,
       bizType: biz_type,
       fundBalanceId: fund_balance_id,
+      userId: user_id,
       token,
       theme,
       locale,
     })
   );
+  getAllDicts();
   return {
     token,
     merchantId: merchant_id,
     bizType: biz_type,
     fundBalanceId: fund_balance_id,
+    userId: user_id,
     theme,
     locale,
   };
