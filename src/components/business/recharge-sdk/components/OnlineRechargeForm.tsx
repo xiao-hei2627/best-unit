@@ -21,6 +21,27 @@ interface OnlineRechargeFormProps {
   loading: boolean;
 }
 
+// 辅助函数：只允许输入数字和小数点，且最多两位小数
+function formatAmountInput(value: string) {
+  // 只保留数字和小数点
+  value = value.replace(/[^\d.]/g, "");
+  // 只保留第一个小数点
+  value = value.replace(/\.(?=.*\.)/g, "");
+  // 保证最多两位小数
+  value = value.replace(/^(\d+)(\.\d{0,2})?.*$/, "$1$2");
+  // 去除前导0（保留0.和0.xx）
+  value = value.replace(/^0+(\d)/, "$1");
+  if (value.startsWith(".")) value = "0" + value;
+  return value;
+}
+// 辅助函数：格式化为两位小数
+function formatToTwoDecimal(value: string) {
+  if (!value) return "";
+  const num = parseFloat(value);
+  if (isNaN(num)) return "";
+  return num.toFixed(2);
+}
+
 export const OnlineRechargeForm: FunctionalComponent<
   OnlineRechargeFormProps
 > = ({ formState, setFormState, onClose, loading }) => {
@@ -263,11 +284,40 @@ export const OnlineRechargeForm: FunctionalComponent<
           placeholder={t("请输入充值金额")}
           value={formState.amount}
           onInput={(e) => {
-            const value = (e.target as HTMLInputElement).value;
+            let value = (e.target as HTMLInputElement).value;
+            value = formatAmountInput(value);
+            let amountError = "";
+            // 只有输入为合法数字且不以小数点结尾时才做区间修正
+            if (value && !value.endsWith(".")) {
+              let num = parseFloat(value);
+              if (!isNaN(num)) {
+                if (num < 1) num = 1;
+                if (num > 999999.99) num = 999999.99;
+                value = num.toString();
+                // 如果原始输入有小数点且小数点后有内容，保留小数部分
+                if (/\./.test((e.target as HTMLInputElement).value)) {
+                  const decimalPart = (
+                    e.target as HTMLInputElement
+                  ).value.split(".")[1];
+                  if (decimalPart !== undefined && decimalPart.length > 0) {
+                    value = num.toFixed(Math.min(decimalPart.length, 2));
+                  }
+                }
+              }
+            }
             setFormState((state: any) => ({
               ...state,
               amount: value,
-              amountError: value.trim() ? "" : state.amountError,
+              amountError,
+            }));
+          }}
+          onBlur={(e) => {
+            let value = (e.target as HTMLInputElement).value;
+            value = formatToTwoDecimal(value);
+            setFormState((state: any) => ({
+              ...state,
+              amount: value,
+              amountError: "",
             }));
           }}
           style={{

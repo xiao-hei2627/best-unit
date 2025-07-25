@@ -311,8 +311,10 @@ export const OfflineTransferForm: FunctionalComponent<
           type="text"
           placeholder={t("请输入转账交易ID")}
           value={formState.transactionId}
+          maxLength={200}
           onInput={(e) => {
-            const value = (e.target as HTMLInputElement).value;
+            let value = (e.target as HTMLInputElement).value;
+            if (value.length > 200) value = value.slice(0, 200);
             setFormState((state: any) => ({
               ...state,
               transactionId: value,
