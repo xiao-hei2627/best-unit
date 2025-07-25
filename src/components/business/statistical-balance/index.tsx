@@ -136,7 +136,7 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
           details: [
             {
               label: t("真实金额"),
-              value: balance.totalAmount,
+              value: balance.availableAmount,
               color: "#15b36b",
               dot: "#15b36b",
             },
@@ -148,7 +148,7 @@ function StatisticalBalance(props: { popoverPosition?: PopoverPosition }) {
             },
             {
               label: t("总可用"),
-              value: balance.availableAmount,
+              value: balance.totalAmount,
               color: "#1890ff",
               dot: "#15b36b",
             },
