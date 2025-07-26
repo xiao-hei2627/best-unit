@@ -4,7 +4,7 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { message } from "@/components/common/Message";
+import { message } from "@/components/common/message";
 import { Env, Locale } from "@/types";
 
 export interface CreateAxiosOptions {

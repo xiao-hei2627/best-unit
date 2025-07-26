@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
-import { ThemedButton } from "./components/Button";
-import { Recharge } from "./components/Recharge";
+import { ThemedButton } from "./components/button/index";
+import { Recharge } from "./components/recharge";
 import register from "preact-custom-element";
 import { createOnlineRecharge } from "@/api";
 import { t } from "@/local";

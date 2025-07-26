@@ -1,5 +1,6 @@
 import type { FunctionalComponent } from "preact";
 import { useState, useEffect } from "preact/hooks";
+import { getMessageTheme } from "./theme";
 
 export type MessageType = "success" | "error" | "warning" | "info";
 
@@ -19,6 +20,7 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
   closable = false,
 }) => {
   const [visible, setVisible] = useState(true);
+  const theme = getMessageTheme();
 
   useEffect(() => {
     if (duration > 0) {
@@ -98,14 +100,6 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
     }
   };
 
-  const getBackgroundColor = () => {
-    return "#fff"; // 统一使用白色背景
-  };
-
-  const getBorderColor = () => {
-    return "#d9d9d9"; // 统一使用灰色边框
-  };
-
   return (
     <div
       style={{
@@ -113,17 +107,18 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
         top: "20px",
         left: "50%",
         zIndex: 9999,
-        background: getBackgroundColor(),
-        border: `1px solid ${getBorderColor()}`,
-        borderRadius: "12px", // 更圆润的圆角
-        padding: "8px 16px", // 减小上下padding
+        background: theme.background,
+        border: `1px solid ${theme.border}`,
+        borderRadius: "12px",
+        padding: "8px 16px",
         display: "flex",
         alignItems: "center",
         gap: "8px",
-        boxShadow: "0 6px 16px rgba(0, 0, 0, 0.12)", // 增强阴影效果
-        minWidth: content.length < 20 ? "auto" : "300px", // 短消息自适应宽度
+        boxShadow: theme.boxShadow,
+        minWidth: content.length < 20 ? "auto" : "300px",
         maxWidth: "500px",
         opacity: visible ? 1 : 0,
+        color: theme.color,
         transform: visible
           ? "translateX(-50%) translateY(0)"
           : "translateX(-50%) translateY(-20px)",
@@ -133,7 +128,7 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
       <div style={{ flexShrink: 0 }}>{getIcon()}</div>
       <div
         style={{
-          color: "#222",
+          color: theme.color,
           fontSize: "14px",
           lineHeight: "1.5",
           flex: 1,
@@ -152,7 +147,7 @@ const MessageItem: FunctionalComponent<MessageProps> = ({
             border: "none",
             cursor: "pointer",
             padding: "4px",
-            color: "#999",
+            color: theme.closeColor,
             fontSize: "12px",
             flexShrink: 0,
           }}
@@ -185,6 +180,7 @@ class MessageManager {
   show(type: MessageType, arg: MessageArg) {
     const { content, duration, closable } = this.parseArg(arg);
     // 创建消息元素
+    const theme = getMessageTheme();
     const messageDiv = document.createElement("div");
     messageDiv.style.cssText = `
       position: fixed;
@@ -192,18 +188,18 @@ class MessageManager {
       left: 50%;
       transform: translateX(-50%);
       z-index: 9999;
-      background: #fff;
-      border: 1px solid #fff;
+      background: ${theme.background};
+      border: 1px solid ${theme.border};
       border-radius: 12px;
       padding: 8px 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      box-shadow: ${theme.boxShadow};
       min-width: ${content.length < 20 ? "auto" : "300px"};
       max-width: 500px;
       display: flex;
       align-items: center;
       gap: 8px;
       font-size: 14px;
-      color: #222;
+      color: ${theme.color};
     `;
 
     // 添加图标
@@ -270,6 +266,7 @@ class MessageManager {
     const textDiv = document.createElement("div");
     textDiv.textContent = content;
     textDiv.style.flex = "1";
+    textDiv.style.color = theme.color;
     messageDiv.appendChild(textDiv);
 
     // 添加关闭按钮（如果启用）
@@ -281,7 +278,7 @@ class MessageManager {
         border: none;
         cursor: pointer;
         padding: 4px;
-        color: #999;
+        color: ${theme.closeColor};
         font-size: 12px;
       `;
       closeBtn.onclick = () => {

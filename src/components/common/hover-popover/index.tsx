@@ -1,6 +1,6 @@
 import { useState, useRef } from "preact/hooks";
 import type { FunctionalComponent, JSX } from "preact";
-import { Theme } from "@/types";
+import { getHoverPopoverTheme } from "./theme";
 
 export type PopoverPosition = "top" | "bottom" | "leftTop" | "rightTop";
 interface HoverPopoverProps {
@@ -31,6 +31,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
   >(popoverPosition);
   const ref = useRef<HTMLDivElement>(null);
   const timerRef = useRef<number | null>(null);
+  const theme = getHoverPopoverTheme();
 
   const handleMouseEnter = () => {
     if (timerRef.current) {
@@ -66,44 +67,7 @@ const HoverPopover: FunctionalComponent<HoverPopoverProps> = ({
     }, 120);
   };
 
-  const popoverTheme = {
-    white: {
-      popover: {
-        background: "#fff",
-        color: "#222",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-        border: "none",
-      },
-      arrow: {
-        top: "#fff",
-        bottom: "#fff",
-        left: "#fff",
-        right: "#fff",
-      },
-    },
-    dark: {
-      popover: {
-        background: "#23262F",
-        color: "#fff",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.32)",
-        border: "1px solid #444C5C",
-      },
-      arrow: {
-        top: "#23262F",
-        bottom: "#23262F",
-        left: "#23262F",
-        right: "#23262F",
-      },
-    },
-  };
-
   // 弹层定位样式
-  const fundUnitParams = JSON.parse(
-    sessionStorage.getItem("fund_unit_params") || "{}"
-  );
-  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
-  const theme = popoverTheme[whiteTheme ? "white" : "dark"];
-
   let popoverStyle: any = {
     position: "absolute",
     zIndex: 999,

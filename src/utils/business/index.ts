@@ -2,7 +2,7 @@ import { getAllDicts } from "@/api";
 import { resetHttpInstance } from "@/api/axiosInstance";
 import { Locale, Theme, type Env } from "@/types";
 
-export function initFundUnit(params: {
+export interface InitParams {
   token: string;
   merchant_id?: string;
   biz_type?: string;
@@ -11,7 +11,9 @@ export function initFundUnit(params: {
   theme?: Theme;
   locale?: Locale;
   env: Env;
-}) {
+}
+
+export function initFundUnit(params: InitParams) {
   const {
     merchant_id,
     biz_type,
@@ -50,4 +52,24 @@ export function initFundUnit(params: {
     locale,
     env,
   };
+}
+
+export function getInitParams<T = InitParams>(key?: string | string[]): T {
+  const fundUnitParams = JSON.parse(
+    sessionStorage.getItem("fund_unit_params") || "{}"
+  );
+
+  if (!key) {
+    return fundUnitParams as T;
+  }
+
+  if (Array.isArray(key)) {
+    const result: Partial<InitParams> = {};
+    key.forEach((k) => {
+      result[k as keyof InitParams] = fundUnitParams[k as keyof InitParams];
+    });
+    return result as T;
+  }
+
+  return fundUnitParams[key] as T;
 }

@@ -1,7 +1,7 @@
 import type { FunctionalComponent, JSX } from "preact";
 import { useState, useRef, useEffect } from "preact/hooks";
-import { Theme } from "@/types";
 import { t } from "@/local";
+import { getSelectTheme } from "./theme";
 
 interface Option {
   value: string;
@@ -39,68 +39,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  // 主题切换
-  const fundUnitParams = JSON.parse(
-    sessionStorage.getItem("fund_unit_params") || "{}"
-  );
-  const whiteTheme = fundUnitParams.theme === Theme.WHITE;
-  // hover灰色 #f5f5f5，选中蓝色 #e6f7ff
-  const selectTheme = whiteTheme
-    ? {
-        trigger: {
-          background: disabled ? "#f5f5f5" : "#fff",
-          color: disabled ? "#bfbfbf" : value ? "#222" : "#bfbfbf",
-          border: error
-            ? "1px solid #ff4d4f"
-            : disabled
-            ? "1px solid #f0f0f0"
-            : "1px solid #d9d9d9",
-        },
-        dropdown: {
-          background: "#fff",
-          border: "1px solid #d9d9d9",
-          color: "#222",
-        },
-        option: (active: boolean, optDisabled: boolean, hovered: boolean) => ({
-          color: optDisabled ? "#bfbfbf" : active ? "#1890ff" : "#222",
-          background: active
-            ? "#e6f7ff"
-            : hovered && !optDisabled
-            ? "#f5f5f5"
-            : optDisabled
-            ? "#f5f5f5"
-            : "#fff",
-        }),
-        placeholder: { color: "#bfbfbf" },
-      }
-    : {
-        trigger: {
-          background: disabled ? "#23262F" : "#23262F",
-          color: disabled ? "#666" : value ? "#fff" : "#666",
-          border: error
-            ? "1px solid #ff4d4f"
-            : disabled
-            ? "1px solid #23262F"
-            : "1px solid #23262F",
-        },
-        dropdown: {
-          background: "#23262F",
-          border: "1px solid #23262F",
-          color: "#fff",
-        },
-        option: (active: boolean, optDisabled: boolean, hovered: boolean) => ({
-          color: optDisabled ? "#666" : active ? "#00E8C6" : "#fff",
-          background: active
-            ? "#23262F"
-            : hovered && !optDisabled
-            ? "#333843"
-            : optDisabled
-            ? "#23262F"
-            : "#23262F",
-        }),
-        placeholder: { color: "#666" },
-      };
+  const theme = getSelectTheme();
 
   useEffect(() => {
     if (!open) return;
@@ -115,6 +54,13 @@ export const Select: FunctionalComponent<SelectProps> = ({
 
   const selected = options.find((opt) => opt.value === value);
 
+  // 获取触发器样式
+  const getTriggerStyle = () => {
+    if (error) return theme.triggerError;
+    if (disabled) return theme.triggerDisabled;
+    return theme.trigger;
+  };
+
   return (
     <div
       ref={ref}
@@ -124,17 +70,17 @@ export const Select: FunctionalComponent<SelectProps> = ({
       <style>{`
         .custom-select-dropdown {
           scrollbar-width: thin;
-          scrollbar-color: #bfbfbf #f5f5f5;
+          scrollbar-color: ${theme.scrollbarThumb} ${theme.scrollbarTrack};
         }
         .custom-select-dropdown::-webkit-scrollbar {
           width: 8px;
         }
         .custom-select-dropdown::-webkit-scrollbar-thumb {
           border-radius: 4px;
-          background: ${whiteTheme ? "#e5e5e5" : "#444C5C"};
+          background: ${theme.scrollbarThumb};
         }
         .custom-select-dropdown::-webkit-scrollbar-track {
-          background: ${whiteTheme ? "#f5f5f5" : "#23262F"};
+          background: ${theme.scrollbarTrack};
         }
       `}</style>
       <div
@@ -151,7 +97,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
           transition: "border 0.2s",
           opacity: disabled ? 0.6 : 1,
           width: "100%",
-          ...selectTheme.trigger,
+          ...getTriggerStyle(),
           ...style,
         }}
         tabIndex={0}
@@ -160,9 +106,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
           {selected ? (
             selected.label
           ) : (
-            <span style={selectTheme.placeholder}>
-              {placeholder || "请选择"}
-            </span>
+            <span style={theme.placeholder}>{placeholder || "请选择"}</span>
           )}
         </span>
         <span style={{ marginLeft: 8, display: "flex", alignItems: "center" }}>
@@ -195,12 +139,10 @@ export const Select: FunctionalComponent<SelectProps> = ({
             top: 44,
             zIndex: 10,
             borderRadius: 6,
-            boxShadow: whiteTheme
-              ? "0 2px 8px rgba(0,0,0,0.08)"
-              : "0 2px 8px rgba(0,0,0,0.32)",
+            boxShadow: theme.boxShadow,
             maxHeight: 220,
             overflowY: "auto",
-            ...selectTheme.dropdown,
+            ...theme.dropdown,
             ...dropdownStyle,
           }}
         >
@@ -260,7 +202,7 @@ export const Select: FunctionalComponent<SelectProps> = ({
                 cursor: opt.disabled ? "not-allowed" : "pointer",
                 fontWeight: value === opt.value ? 600 : 400,
                 opacity: opt.disabled ? 0.6 : 1,
-                ...selectTheme.option(
+                ...theme.option(
                   value === opt.value,
                   !!opt.disabled,
                   hoveredIndex === idx
