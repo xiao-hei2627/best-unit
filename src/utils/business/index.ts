@@ -1,4 +1,5 @@
 import { getAllDicts } from "../../api";
+import { resetHttpInstance } from "../../api/axiosInstance";
 import { Locale, Theme, type Env } from "../../types";
 
 export function initFundUnit(params: {
@@ -34,6 +35,10 @@ export function initFundUnit(params: {
       env,
     })
   );
+
+  // 重置 axios 实例，确保使用新的配置
+  resetHttpInstance();
+
   getAllDicts();
   return {
     token,

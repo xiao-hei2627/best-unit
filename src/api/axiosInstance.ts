@@ -18,6 +18,8 @@ export function createAxiosInstance(options: CreateAxiosOptions = {}) {
   const fundUnitParams = JSON.parse(
     sessionStorage.getItem("fund_unit_params") || "{}"
   );
+
+  console.log("fundUnitParams", fundUnitParams);
   const { env } = fundUnitParams;
 
   let apiUrl: string;
@@ -89,6 +91,21 @@ export function createAxiosInstance(options: CreateAxiosOptions = {}) {
   return instance;
 }
 
-// 默认实例
-const http = createAxiosInstance();
+// 缓存 axios 实例
+let httpInstance: AxiosInstance | null = null;
+
+// 获取 axios 实例的函数
+export function http(): AxiosInstance {
+  if (!httpInstance) {
+    httpInstance = createAxiosInstance();
+  }
+  return httpInstance;
+}
+
+// 重置 axios 实例（当 fund_unit_params 更新时调用）
+export function resetHttpInstance(): void {
+  httpInstance = null;
+}
+
+// 默认导出获取实例的函数
 export default http;
