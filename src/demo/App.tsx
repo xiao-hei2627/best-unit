@@ -1,10 +1,10 @@
 import { useState } from "preact/hooks";
-import { npmTest, printCurrentTime } from "../main";
-import { BestUnit } from "../components/business/recharge-sdk";
-import { initFundUnit } from "../main";
-import StatisticalBalance from "../components/business/statistical-balance";
-import { t } from "../local";
-import { Env, Locale, Theme } from "../types";
+import { npmTest, printCurrentTime } from "@/main";
+import { BestUnit } from "@/components/business/recharge-sdk";
+import { initFundUnit } from "@/main";
+import StatisticalBalance from "@/components/business/statistical-balance";
+import { t } from "@/local";
+import { Env, Locale, Theme } from "@/types";
 
 export default function DemoApp() {
   const [currentLocale, setCurrentLocale] = useState<Locale>(Locale.ZH);

@@ -1,8 +1,8 @@
 import type { FunctionalComponent } from "preact";
-import { useRef, useState } from "preact/hooks";
-import { uploadFile } from "../../api";
-import { t } from "../../local";
-import { Theme } from "../../types";
+import { useState, useRef } from "preact/hooks";
+import { uploadFile } from "@/api";
+import { t } from "@/local";
+import { Theme } from "@/types";
 
 interface UploadProps {
   value?: string[];

@@ -1,6 +1,6 @@
-import { getAllDicts } from "../../api";
-import { resetHttpInstance } from "../../api/axiosInstance";
-import { Locale, Theme, type Env } from "../../types";
+import { getAllDicts } from "@/api";
+import { resetHttpInstance } from "@/api/axiosInstance";
+import { Locale, Theme, type Env } from "@/types";
 
 export function initFundUnit(params: {
   token: string;

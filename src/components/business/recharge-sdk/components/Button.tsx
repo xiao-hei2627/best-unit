@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { Theme } from "../../../../types";
+import { Theme } from "@/types";
 
 interface ButtonProps {
   onClick?: () => void;

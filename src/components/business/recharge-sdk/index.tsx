@@ -2,8 +2,8 @@ import { useState } from "preact/hooks";
 import { ThemedButton } from "./components/Button";
 import { Recharge } from "./components/Recharge";
 import register from "preact-custom-element";
-import { createOnlineRecharge } from "../../../api";
-import { t } from "../../../local";
+import { createOnlineRecharge } from "@/api";
+import { t } from "@/local";
 
 export function BestUnit() {
   const [visible, setVisible] = useState(false);

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "preact/hooks";
 import { OnlineRechargeForm } from "./OnlineRechargeForm";
 import { OfflineTransferForm } from "./OfflineTransferForm";
-import { t } from "../../../../local";
-import { Theme } from "../../../../types";
+import { t } from "@/local";
+import { Theme } from "@/types";
 
 interface ModalFormProps {
   visible: boolean;

@@ -1,7 +1,7 @@
 import type { FunctionalComponent, JSX } from "preact";
 import { useState, useRef, useEffect } from "preact/hooks";
-import { Theme } from "../../types";
-import { t } from "../../local";
+import { Theme } from "@/types";
+import { t } from "@/local";
 
 interface Option {
   value: string;

@@ -1,14 +1,14 @@
 {
   "name": "best-unit",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.8",
   "type": "module",
   "main": "dist/best-unit.cjs",
   "module": "dist/best-unit.js",
   "types": "dist/types/global.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && cp -r src/types dist/types",
+    "build": "tsc --noEmit && vite build && cp -r src/types dist/types",
     "prepublishOnly": "npm version patch --no-git-tag-version",
     "preview": "vite preview"
   },

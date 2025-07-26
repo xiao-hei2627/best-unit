@@ -1,6 +1,6 @@
 import { getZhText, zh } from "./zh";
 import { getEnText, en } from "./en";
-import { Locale } from "../types";
+import { Locale } from "@/types";
 
 // 获取当前语言
 export function getCurrentLocale(): Locale {

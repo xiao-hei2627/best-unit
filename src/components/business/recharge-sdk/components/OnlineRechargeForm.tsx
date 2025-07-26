@@ -1,9 +1,9 @@
 import type { FunctionalComponent } from "preact";
 import { useState, useEffect } from "preact/hooks";
-import { t } from "../../../../local";
-import { Theme } from "../../../../types";
-import { Select } from "../../../common/Select";
-import { calcPaymentAmount } from "../../../../api";
+import { t } from "@/local";
+import { Theme } from "@/types";
+import { Select } from "@/components/common/Select";
+import { calcPaymentAmount } from "@/api";
 
 interface OnlineRechargeFormProps {
   formState: {

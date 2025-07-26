@@ -1,9 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import HoverPopover, { type PopoverPosition } from "../../common/HoverPopover";
-import { getBalance } from "../../../api";
-import { t } from "../../../local";
+import HoverPopover, { type PopoverPosition } from "@/components/common/HoverPopover";
+import { getBalance } from "@/api";
+import { t } from "@/local";
 import register from "preact-custom-element";
-import { Theme } from "../../../types";
+import { Theme } from "@/types";
 
 function formatNumber(num: number) {
   return num.toLocaleString("en-US", {

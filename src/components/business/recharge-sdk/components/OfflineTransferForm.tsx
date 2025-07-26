@@ -1,10 +1,10 @@
 import type { FunctionalComponent } from "preact";
-import { Upload } from "../../../common/Upload";
-import { createOfflineRecharge } from "../../../../api";
-import { message } from "../../../common/Message";
-import { t } from "../../../../local";
-import { Theme } from "../../../../types";
-import { Select } from "../../../common/Select";
+import { Upload } from "@/components/common/Upload";
+import { createOfflineRecharge } from "@/api";
+import { message } from "@/components/common/Message";
+import { t } from "@/local";
+import { Theme } from "@/types";
+import { Select } from "@/components/common/Select";
 
 interface OfflineTransferFormProps {
   formState: {
