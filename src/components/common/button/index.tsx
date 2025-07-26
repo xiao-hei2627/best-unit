@@ -7,7 +7,7 @@ interface ButtonProps {
   children: ComponentChildren;
 }
 
-export function ThemedButton({ onClick, color, children }: ButtonProps) {
+export function Button({ onClick, color, children }: ButtonProps) {
   const style = getButtonTheme(color);
   return (
     <button style={style} onClick={onClick} type="button">

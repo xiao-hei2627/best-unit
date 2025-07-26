@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { ThemedButton } from "./components/button/index";
+import { Button } from "@/components/common/button";
 import { Recharge } from "./components/recharge";
 import register from "preact-custom-element";
 import { createOnlineRecharge } from "@/api";
@@ -22,9 +22,9 @@ export function BestUnit() {
 
   return (
     <div>
-      <ThemedButton onClick={() => setVisible(true)}>
+      <Button onClick={() => setVisible(true)}>
         {t("充值/转账")}
-      </ThemedButton>
+      </Button>
       <Recharge
         visible={visible}
         onClose={() => setVisible(false)}
