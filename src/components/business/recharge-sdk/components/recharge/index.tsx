@@ -2,6 +2,7 @@ import { useState, useEffect } from "preact/hooks";
 import { OnlineRechargeForm } from "../online-recharge-form";
 import { OfflineTransferForm } from "../offline-transfer-form";
 import { t } from "@/local";
+import { Modal } from "@/components/common/modal";
 import { getRechargeTheme } from "./theme";
 
 interface ModalFormProps {
@@ -29,7 +30,6 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
     rechargeChannelError: "",
     currencyError: "",
   });
-  const [activeTab, setActiveTab] = useState<"online" | "offline">("online");
   const [offlineFormState, setOfflineFormState] = useState({
     platform: "",
     transactionId: "",
@@ -39,6 +39,8 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
     filesError: "",
     loading: false,
   });
+  const [activeTab, setActiveTab] = useState<"online" | "offline">("online");
+  const theme = getRechargeTheme();
 
   // 每次关闭弹窗时重置内容
   useEffect(() => {
@@ -65,8 +67,6 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
       });
     }
   }, [visible]);
-
-  if (!visible) return null;
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -103,101 +103,43 @@ export function Recharge({ visible, onClose, onSubmit }: ModalFormProps) {
     }
   };
 
-  // 记录鼠标是否在mask上按下
-  const [maskMouseDown, setMaskMouseDown] = useState(false);
-
-  // 只有mousedown和mouseup都在mask上才关闭弹窗
-  const handleMaskMouseDown = (e: any) => {
-    if (e.target === e.currentTarget) {
-      setMaskMouseDown(true);
-    } else {
-      setMaskMouseDown(false);
-    }
-  };
-  const handleMaskMouseUp = (e: any) => {
-    if (e.target === e.currentTarget && maskMouseDown) {
-      onClose();
-    }
-    setMaskMouseDown(false);
-  };
-
-  const theme = getRechargeTheme();
-
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: theme.mask,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-      }}
-      onMouseDown={handleMaskMouseDown}
-      onMouseUp={handleMaskMouseUp}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          background: theme.modalBg,
-          padding: 32,
-          borderRadius: 12,
-          minWidth: 400,
-          maxWidth: 400,
-          color: theme.modalColor,
-          boxShadow: theme.modalBoxShadow,
-          position: "relative",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* 关闭按钮 */}
+    <Modal visible={visible} onClose={onClose} title={t("充值 / 转账")}>
+      {/* tab 按钮区域 */}
+      <div style={{ display: "flex", marginBottom: 28 }}>
         <button
           type="button"
-          onClick={onClose}
-          style={theme.closeBtn}
-          aria-label={t("关闭")}
+          onClick={() => setActiveTab("online")}
+          style={theme.tabBtn(activeTab === "online", true)}
         >
-          ×
+          {t("在线充值")}
         </button>
-        <div style={theme.title}>{t("充值 / 转账")}</div>
-        {/* tab 按钮区域 */}
-        <div style={{ display: "flex", marginBottom: 28 }}>
-          <button
-            type="button"
-            onClick={() => setActiveTab("online")}
-            style={theme.tabBtn(activeTab === "online", true)}
-          >
-            {t("在线充值")}
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("offline")}
-            style={theme.tabBtn(activeTab === "offline", false)}
-          >
-            {t("线下转账")}
-          </button>
-        </div>
-        {/* tab 内容区域 */}
-        {activeTab === "online" ? (
+        <button
+          type="button"
+          onClick={() => setActiveTab("offline")}
+          style={theme.tabBtn(activeTab === "offline", false)}
+        >
+          {t("线下转账")}
+        </button>
+      </div>
+      {/* tab 内容区域 */}
+      {activeTab === "online" ? (
+        <form onSubmit={handleSubmit}>
           <OnlineRechargeForm
             formState={formState}
             setFormState={setFormState}
             onClose={onClose}
             loading={formState.loading}
           />
-        ) : (
-          <OfflineTransferForm
-            formState={offlineFormState}
-            setFormState={setOfflineFormState}
-            onClose={onClose}
-            loading={offlineFormState.loading}
-          />
-        )}
-      </form>
-    </div>
+        </form>
+      ) : (
+        <OfflineTransferForm
+          formState={offlineFormState}
+          setFormState={setOfflineFormState}
+          onClose={onClose}
+          loading={offlineFormState.loading}
+        />
+      )}
+    </Modal>
   );
 }

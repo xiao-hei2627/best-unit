@@ -3,28 +3,6 @@ import { getInitParams } from "@/utils/business";
 
 export const rechargeThemes = {
   white: {
-    modalBg: "#fff",
-    modalColor: "#222",
-    modalBoxShadow: "0 4px 24px rgba(0,0,0,0.08)",
-    mask: "rgba(0,0,0,0.3)",
-    title: {
-      fontWeight: 600,
-      fontSize: 20,
-      marginBottom: 24,
-      textAlign: "left",
-      color: "#222",
-    },
-    closeBtn: {
-      position: "absolute",
-      right: 16,
-      top: 16,
-      background: "none",
-      border: "none",
-      color: "#222",
-      fontSize: 22,
-      cursor: "pointer",
-      lineHeight: 1,
-    },
     tabBtn: (active: boolean, left: boolean) => ({
       flex: 1,
       background: active ? "#fff" : "#F7F8FA",
@@ -43,28 +21,6 @@ export const rechargeThemes = {
     }),
   },
   dark: {
-    modalBg: "#181A20",
-    modalColor: "#fff",
-    modalBoxShadow: "0 4px 24px rgba(0,0,0,0.5)",
-    mask: "rgba(0,0,0,0.7)",
-    title: {
-      fontWeight: 600,
-      fontSize: 20,
-      marginBottom: 24,
-      textAlign: "left",
-      color: "#fff",
-    },
-    closeBtn: {
-      position: "absolute",
-      right: 16,
-      top: 16,
-      background: "none",
-      border: "none",
-      color: "#fff",
-      fontSize: 22,
-      cursor: "pointer",
-      lineHeight: 1,
-    },
     tabBtn: (active: boolean, left: boolean) => ({
       flex: 1,
       background: active ? "#23262F" : "#181A20",
