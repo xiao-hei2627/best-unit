@@ -24,17 +24,17 @@ export function createAxiosInstance(options: CreateAxiosOptions = {}) {
 
   let apiUrl: string;
   switch (env) {
-    case Env.PROD:
-    case Env.PRODUCTION:
-      apiUrl = "https://fund.bestfulfill.com/api/sdk";
+    case Env.DEV:
+    case Env.DEVELOPMENT:
+      apiUrl = "/api";
       break;
     case Env.TEST:
       apiUrl = "https://fund.bestfulfill.tech/api/sdk";
       break;
-    case Env.DEV:
-    case Env.DEVELOPMENT:
+    case Env.PROD:
+    case Env.PRODUCTION:
     default:
-      apiUrl = "/api";
+      apiUrl = "https://fund.bestfulfill.com/api/sdk";
       break;
   }
 
