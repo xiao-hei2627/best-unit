@@ -63,6 +63,7 @@ declare global {
         [key: string]: any;
       };
       "best-statistical-balance": any;
+      "best-refresh-button": any;
     }
   }
 }

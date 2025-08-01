@@ -41,6 +41,11 @@ function RefreshButton({
       transform-origin: center;
       will-change: transform;
     }
+    
+    /* 隐藏 fallback content */
+    :host {
+      display: inline-block;
+    }
   `;
 
   const handleClick = async () => {
@@ -89,6 +94,6 @@ function RefreshButton({
   );
 }
 
-register(RefreshButton, "best-refresh-button");
+register(RefreshButton, "best-refresh-button", [], { shadow: true });
 
 export default RefreshButton;

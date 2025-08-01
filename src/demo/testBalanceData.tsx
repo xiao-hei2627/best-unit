@@ -10,10 +10,10 @@ export function TestBalanceData({ isDark }: TestBalanceDataProps) {
   const [balanceLoading, setBalanceLoading] = useState(false);
 
   // 测试 getBalanceData 函数
-  const testGetBalanceData = () => {
+  const testGetBalanceData = async () => {
     setBalanceLoading(true);
     try {
-      const result = getBalanceData();
+      const result = await getBalanceData();
       setBalanceData(result);
       console.log("getBalanceData 测试结果:", result);
     } catch (error) {

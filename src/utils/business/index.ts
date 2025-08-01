@@ -1,4 +1,4 @@
-import { getAllDicts } from "@/api";
+import { getAllDicts, getBalance } from "@/api";
 import { resetHttpInstance } from "@/api/axiosInstance";
 import { Locale, Theme, type Env } from "@/types";
 
@@ -28,8 +28,13 @@ export interface InitParams {
 }
 
 // 获取余额数据并暴露给外部系统
-export function getBalanceData() {
-  return JSON.parse(sessionStorage.getItem("balanceData") || "{}");
+export async function getBalanceData() {
+  let balanceData = JSON.parse(sessionStorage.getItem("balanceData") || "{}");
+  if (balanceData && Object.keys(balanceData).length > 0) {
+    return balanceData;
+  }
+  balanceData = await getBalance();
+  return balanceData;
 }
 
 export function initFundUnit(params: InitParams) {
