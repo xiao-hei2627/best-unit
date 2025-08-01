@@ -42,19 +42,16 @@ export function getRefreshButtonSizeStyles(size: "small" | "medium" | "large") {
     case "small":
       return {
         fontSize: "12px",
-        padding: "4px 8px",
         gap: "2px",
       };
     case "large":
       return {
         fontSize: "18px",
-        padding: "12px 20px",
         gap: "6px",
       };
     default:
       return {
         fontSize: "14px",
-        padding: "8px 16px",
         gap: "4px",
       };
   }

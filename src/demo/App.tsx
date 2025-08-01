@@ -373,10 +373,10 @@ export default function DemoApp() {
               flexWrap: "wrap",
             }}
           >
-            <RefreshButton />
-            <RefreshButton showText={false} />
-            <RefreshButton color="#ff6b6b" />
-            <RefreshButton color="#52c41a" />
+            <RefreshButton>{t("刷新")}</RefreshButton>
+            <RefreshButton></RefreshButton>
+            <RefreshButton color="#ff6b6b"></RefreshButton>
+            <RefreshButton color="#52c41a"></RefreshButton>
           </div>
         </div>
 
@@ -392,9 +392,9 @@ export default function DemoApp() {
               flexWrap: "wrap",
             }}
           >
-            <RefreshButton size="small" />
-            <RefreshButton size="medium" />
-            <RefreshButton size="large" />
+            <RefreshButton size="small"></RefreshButton>
+            <RefreshButton size="medium"></RefreshButton>
+            <RefreshButton size="large"></RefreshButton>
           </div>
         </div>
 
@@ -411,7 +411,7 @@ export default function DemoApp() {
               flexWrap: "wrap",
             }}
           >
-            <RefreshButton />
+            <RefreshButton>{t("刷新")}</RefreshButton>
           </div>
           <p
             style={{
@@ -437,10 +437,33 @@ export default function DemoApp() {
               flexWrap: "wrap",
             }}
           >
-            <RefreshButton color="#1890ff" size="medium" />
-            <RefreshButton color="#52c41a" size="small" showText={false} />
-            <RefreshButton color="#faad14" size="large" />
-            <RefreshButton color="#ff4d4f" size="medium" showText={false} />
+            <RefreshButton color="#1890ff" size="medium">
+              {t("刷新")}
+            </RefreshButton>
+            <RefreshButton color="#52c41a" size="small"></RefreshButton>
+            <RefreshButton color="#faad14" size="large">
+              {t("刷新")}
+            </RefreshButton>
+            <RefreshButton color="#ff4d4f" size="medium"></RefreshButton>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            自定义文案：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <RefreshButton>重新加载</RefreshButton>
+            <RefreshButton>更新</RefreshButton>
+            <RefreshButton>同步</RefreshButton>
+            <RefreshButton>刷新余额</RefreshButton>
           </div>
         </div>
 
@@ -460,7 +483,8 @@ export default function DemoApp() {
             <li>鼠标悬停在按钮上会有缩放和透明度变化效果</li>
             <li>鼠标悬停在刷新图标上会有旋转动画</li>
             <li>支持不同尺寸和颜色自定义</li>
-            <li>可以通过showText属性控制是否显示文字</li>
+            <li>可以通过 slot 传入自定义文案，不传则只显示图标</li>
+            <li>支持任意内容作为 slot，包括文本、图标等</li>
           </ul>
         </div>
       </div>
