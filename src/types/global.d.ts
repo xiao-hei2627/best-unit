@@ -21,6 +21,10 @@ export declare function initFundUnit(params: {
   env: Env;
 };
 
+export declare function getBalanceData(): any;
+
+export declare function refreshBalance(): void;
+
 // Vite 代理配置类型
 export declare const viteProxy: {
   "/api": {
@@ -44,6 +48,8 @@ declare global {
         theme?: Theme;
         env: Env;
       }) => void;
+      getBalanceData: () => any;
+      refreshBalance: () => void;
     };
   }
 

@@ -15,11 +15,28 @@ export function getBalance() {
     })
     .then((res) => {
       const data = res.data;
-      return {
-        totalAmount: data.total_amount || 0,
-        availableAmount: data.available_amount || 0,
-        frozenAmount: data.frozen_amount || 0,
+      const balanceData = {
+        fundBalanceId: data.fund_balance_id,
+        merchantId: data.merchant_id,
+        bizType: data.biz_type,
+        currency: data.currency,
+        totalAmount: Number(
+          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
+        ),
+        availableAmount: Number(
+          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
+        ),
+        frozenAmount: Number(
+          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
+        ),
+        pendingAmount: Number(
+          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
+        ),
+        status: data.status,
+        createdAt: new Date().toISOString(),
       };
+      sessionStorage.setItem("balanceData", JSON.stringify(balanceData));
+      return balanceData;
     });
 }
 
@@ -82,8 +99,6 @@ export const createOnlineRecharge = async (data: any) => {
   const fundUnitParams = JSON.parse(
     sessionStorage.getItem("fund_unit_params") || "{}"
   );
-
-  console.log(fundUnitParams, "fundUnitParams");
 
   const params = {
     merchant_id: Number(fundUnitParams.merchantId),

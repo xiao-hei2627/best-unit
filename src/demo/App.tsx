@@ -1,10 +1,12 @@
 import { useState } from "preact/hooks";
 import { npmTest, printCurrentTime } from "@/main";
 import { BestUnit } from "@/components/business/recharge-sdk";
-import { initFundUnit } from "@/main";
+import { initFundUnit, refreshBalance } from "@/main";
 import StatisticalBalance from "@/components/business/statistical-balance";
+import RefreshButton from "@/components/business/refresh-button";
 import { t } from "@/local";
 import { Env, Locale, Theme } from "@/types";
+import TestBalanceData from "./testBalanceData";
 
 export default function DemoApp() {
   const [currentLocale, setCurrentLocale] = useState<Locale>(Locale.ZH);
@@ -106,6 +108,9 @@ export default function DemoApp() {
           当前时间戳: {Date.now()}
         </p>
       </div>
+
+      {/* getBalanceData 测试区域 */}
+      <TestBalanceData isDark={isDark} />
 
       {/* 国际化切换区域 */}
       <div
@@ -342,6 +347,124 @@ export default function DemoApp() {
         <StatisticalBalance />
       </div>
 
+      {/* Refresh Button 测试区域 */}
+      <div
+        style={{
+          marginTop: 20,
+          padding: 16,
+          border: "2px solid #722ed1",
+          borderRadius: 8,
+          backgroundColor: "#f9f0ff",
+        }}
+      >
+        <h3 style={{ marginTop: 0, marginBottom: 12, color: "#722ed1" }}>
+          🧪 Refresh Button 组件测试：
+        </h3>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            基本用法：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <RefreshButton />
+            <RefreshButton showText={false} />
+            <RefreshButton color="#ff6b6b" />
+            <RefreshButton color="#52c41a" />
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            不同尺寸：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <RefreshButton size="small" />
+            <RefreshButton size="medium" />
+            <RefreshButton size="large" />
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            与余额组件配合使用：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <RefreshButton />
+          </div>
+          <p
+            style={{
+              marginTop: 8,
+              fontSize: "12px",
+              color: "#666",
+              textAlign: "center",
+            }}
+          >
+            点击刷新按钮可以重新获取余额数据
+          </p>
+        </div>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            自定义样式：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <RefreshButton color="#1890ff" size="medium" />
+            <RefreshButton color="#52c41a" size="small" showText={false} />
+            <RefreshButton color="#faad14" size="large" />
+            <RefreshButton color="#ff4d4f" size="medium" showText={false} />
+          </div>
+        </div>
+
+        <div
+          style={{
+            marginTop: 16,
+            padding: 12,
+            backgroundColor: isDark ? "#23262F" : "#fff",
+            border: "1px solid #d9d9d9",
+            borderRadius: 6,
+            fontSize: "12px",
+          }}
+        >
+          <strong>测试说明：</strong>
+          <ul style={{ margin: "8px 0", paddingLeft: "20px" }}>
+            <li>点击任意刷新按钮都会触发余额组件重新获取数据</li>
+            <li>鼠标悬停在按钮上会有缩放和透明度变化效果</li>
+            <li>鼠标悬停在刷新图标上会有旋转动画</li>
+            <li>支持不同尺寸和颜色自定义</li>
+            <li>可以通过showText属性控制是否显示文字</li>
+          </ul>
+        </div>
+      </div>
+
       {/* 国际化文本测试区域 */}
       <div
         style={{
@@ -422,6 +545,106 @@ export default function DemoApp() {
             <br />
             {t("关闭")}
           </div>
+        </div>
+      </div>
+
+      {/* Business Utils 测试区域 */}
+      <div
+        style={{
+          marginTop: 20,
+          padding: 16,
+          border: "2px solid #13c2c2",
+          borderRadius: 8,
+          backgroundColor: "#e6fffb",
+        }}
+      >
+        <h3 style={{ marginTop: 0, marginBottom: 12, color: "#13c2c2" }}>
+          🧪 Business Utils 方法测试：
+        </h3>
+
+        <div style={{ marginBottom: 16 }}>
+          <h4 style={{ color: isDark ? "#F5F6FA" : "#333", marginBottom: 8 }}>
+            refreshBalanceEvent 方法测试：
+          </h4>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={() => refreshBalance()}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: "#13c2c2",
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              调用 refreshBalanceEvent()
+            </button>
+            <button
+              onClick={() => refreshBalance()}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: "#722ed1",
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              静默刷新余额
+            </button>
+            <button
+              onClick={() => refreshBalance()}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: "#52c41a",
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              自定义来源刷新
+            </button>
+          </div>
+        </div>
+
+        <div
+          style={{
+            marginTop: 16,
+            padding: 12,
+            backgroundColor: isDark ? "#23262F" : "#fff",
+            border: "1px solid #d9d9d9",
+            borderRadius: 6,
+            fontSize: "12px",
+          }}
+        >
+          <strong>Business Utils 方法说明：</strong>
+          <ul style={{ margin: "8px 0", paddingLeft: "20px" }}>
+            <li>
+              <code>refreshBalanceEvent()</code> -
+              基础刷新方法，触发所有余额组件刷新
+            </li>
+            <li>
+              <code>refreshBalanceEvent(&#123; silent: true &#125;)</code> -
+              静默刷新，不显示控制台日志
+            </li>
+            <li>
+              <code>refreshBalanceEvent(&#123; source: "custom" &#125;)</code> -
+              自定义来源标识的刷新
+            </li>
+            <li>现在refresh-button组件内部也使用这个函数，实现了代码复用</li>
+          </ul>
         </div>
       </div>
     </div>
