@@ -20,20 +20,12 @@ export function getBalance() {
         merchantId: data.merchant_id,
         bizType: data.biz_type,
         currency: data.currency,
-        totalAmount: Number(
-          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
-        ),
-        availableAmount: Number(
-          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
-        ),
-        frozenAmount: Number(
-          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
-        ),
-        pendingAmount: Number(
-          (Math.floor(Math.random() * 10000) / 100).toFixed(2)
-        ),
+        totalAmount: data.total_amount,
+        availableAmount: data.available_amount,
+        frozenAmount: data.frozen_amount,
+        pendingAmount: data.pending_amount,
         status: data.status,
-        createdAt: new Date().toISOString(),
+        createdAt: data.created_at,
       };
       sessionStorage.setItem("balanceData", JSON.stringify(balanceData));
       return balanceData;
